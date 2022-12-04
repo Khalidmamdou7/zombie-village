@@ -77,6 +77,7 @@ namespace our {
         ShaderProgram& operator=(ShaderProgram&) = delete;
         //TODO: (Req 1) Delete the copy constructor and assignment operator.
         //Question: Why do we delete the copy constructor and assignment operator?
+        // To avoid copying the shader program, which could cause conflicts if one of the copies is deleted.
     };
 
 }
