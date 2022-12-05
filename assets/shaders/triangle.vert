@@ -14,7 +14,31 @@ out Varyings {
 // Each vertex "v" should be transformed to be "scale * v + translation".
 // The default value for "translation" is (0.0, 0.0) and for "scale" is (1.0, 1.0).
 
+uniform vec2 translation = vec2(0.0, 0.0);
+uniform vec2 scale = vec2(1.0, 1.0);
+
 //TODO: (Req 1) Finish this shader
 
 void main(){
+    vec3 positions[3] = vec3[3](
+        vec3(-0.5, -0.5, 0.0),
+        vec3( 0.5, -0.5, 0.0), 
+        vec3( 0.0,  0.5, 0.0)
+    );
+    vec3 colors[3] = vec3[3](
+        vec3(1.0, 0.0, 0.0), 
+        vec3(0.0, 1.0, 0.0), 
+        vec3(0.0, 0.0, 1.0)
+    );
+
+    // gl_VertexID is a builtIn variable that determine the vertex index
+    vec3 vertexPosition = positions[gl_VertexID];
+    vertexPosition.xy *= scale;
+    vertexPosition.xy += translation;
+
+    // gl_Position is used by OpenGL to determine the vertex position on the screen, 
+    // it takes the position and a 4th component 'w' (homogeneous component) used for prespective projection.
+    gl_Position = vec4(vertexPosition, 1.0);
+    vs_out.color = colors[gl_VertexID];
+
 }
