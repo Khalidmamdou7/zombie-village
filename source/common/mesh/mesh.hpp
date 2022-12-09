@@ -33,6 +33,11 @@ namespace our {
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
             elementCount = elements.size();
 
+            // create the vertex array object to define how to read the vertex and element buffer during rendering
+            GLuint VAO;
+            glGenVertexArrays(1,&VAO);
+            glBindVertexArray(VAO);
+
             // create a vertex buffer and bind it, then store the verteces data to it
             GLuint VBO;
             glGenBuffers(1, &VBO);
@@ -47,10 +52,6 @@ namespace our {
             // the byte size of the elements array is equal to size of one vertex in bytes multiplied by the size of the whole array
             glBufferData(GL_ELEMENT_ARRAY_BUFFER,elements.size() * sizeof(unsigned int), &elements[0], GL_STATIC_DRAW);
 
-            // create the vertex array object to define how to read the vertex and element buffer during rendering
-            GLuint VAO;
-            glGenVertexArrays(1,&VAO);
-            glBindVertexArray(VAO);
 
             // We can tell OpenGL how it should interpret the vertex data (per vertex attribute) using glVertexAttribPointer: 
             // position attribute
@@ -74,7 +75,7 @@ namespace our {
         // this function should render the mesh
         void draw() 
         {
-            //TODO: (Req 2) Write this function            
+            //TODO: (Req 2) Write this function 
             glDrawElement(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, 0);
         }
 
