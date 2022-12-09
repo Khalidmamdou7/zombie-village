@@ -76,7 +76,7 @@ namespace our {
         void draw() 
         {
             //TODO: (Req 2) Write this function 
-            glDrawElement(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, 0);
         }
 
         // this function should delete the vertex & element buffers and the vertex array object
