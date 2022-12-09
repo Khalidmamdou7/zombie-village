@@ -28,7 +28,7 @@ namespace our {
         // a vertex array object to define how to read the vertex & element buffer during rendering 
         Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& elements)
         {
-            //TODO: (Req 2) Write this function
+           //TODO: (Req 2) Write this function
             // remember to store the number of elements in "elementCount" since you will need it for drawing
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
             elementCount = elements.size();
@@ -60,7 +60,7 @@ namespace our {
 
             // color attribute
             glEnableVertexAttribArray(ATTRIB_LOC_COLOR);
-            glVertexAttribPointer(ATTRIB_LOC_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, color));
+            glVertexAttribPointer(ATTRIB_LOC_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void *)offsetof(Vertex, color));
 
             // normal attribute
             glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
