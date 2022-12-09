@@ -56,7 +56,7 @@ namespace our {
             // We can tell OpenGL how it should interpret the vertex data (per vertex attribute) using glVertexAttribPointer: 
             // position attribute
             glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
-            glVertexAttribPointer(ATTRIB_LOC_POSITION, 2 , GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
+            glVertexAttribPointer(ATTRIB_LOC_POSITION, 3 , GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
 
             // color attribute
             glEnableVertexAttribArray(ATTRIB_LOC_COLOR);
