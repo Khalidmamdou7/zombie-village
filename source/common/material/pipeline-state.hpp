@@ -42,6 +42,39 @@ namespace our {
         // For example, if faceCulling.enabled is true, you should call glEnable(GL_CULL_FACE), otherwise, you should call glDisable(GL_CULL_FACE)
         void setup() const {
             //TODO: (Req 4) Write this function
+
+            if (faceCulling.enabled) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+            // Configure face culling options
+            // Configure which face to cull (back, front or both)
+            glCullFace(faceCulling.culledFace);
+            // Configure front face winding order (which side is considered front (counter-clockwise or clockwise))
+            glFrontFace(faceCulling.frontFace);
+
+
+            if (depthTesting.enabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+            // Configure depth testing options
+            // Configure depth testing function (GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, GL_ALWAYS, GL_NEVER)
+            glDepthFunc(depthTesting.function);
+
+            
+            // Enable/disable depth buffer writing
+            glDepthMask(depthMask);
+
+            // Enable/disable Writing color components into the framebuffer
+            // glColorMask specifies whether the individual color components in the frame buffer can or cannot be written.
+            // If red is GL_FALSE, for example, no change is made to the red component of any pixel in any of the color buffers,
+            // regardless of the drawing operation attempted. 
+            glColorMask(colorMask.r, colorMask.g, colorMask.b, colorMask.a);
+
+            if (blending.enabled) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+            // Configure blending options
+            // Configure blending equation (GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX)
+            glBlendEquation(blending.equation);
+            // Configure blending function (GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA, GL_SRC_ALPHA_SATURATE, GL_SRC1_COLOR, GL_ONE_MINUS_SRC1_COLOR, GL_SRC1_ALPHA, GL_ONE_MINUS_SRC1_ALPHA)
+            glBlendFunc(blending.sourceFactor, blending.destinationFactor);
+            // Configure blending constant color
+            glBlendColor(blending.constantColor.r, blending.constantColor.g, blending.constantColor.b, blending.constantColor.a);
+
         }
 
         // Given a json object, this function deserializes a PipelineState structure
