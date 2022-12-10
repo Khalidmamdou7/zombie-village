@@ -42,6 +42,15 @@ namespace our {
         // For example, if faceCulling.enabled is true, you should call glEnable(GL_CULL_FACE), otherwise, you should call glDisable(GL_CULL_FACE)
         void setup() const {
             //TODO: (Req 4) Write this function
+
+            if (faceCulling.enabled) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+            // Configure face culling options
+            // Configure which face to cull (back, front or both)
+            glCullFace(faceCulling.culledFace);
+            // Configure front face winding order (which side is considered front (counter-clockwise or clockwise))
+            glFrontFace(faceCulling.frontFace);
+
+
         }
 
         // Given a json object, this function deserializes a PipelineState structure
