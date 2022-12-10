@@ -51,6 +51,21 @@ namespace our {
             glFrontFace(faceCulling.frontFace);
 
 
+            if (depthTesting.enabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+            // Configure depth testing options
+            // Configure depth testing function (GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, GL_ALWAYS, GL_NEVER)
+            glDepthFunc(depthTesting.function);
+
+            
+            // Enable/disable depth buffer writing
+            glDepthMask(depthMask);
+
+            // Enable/disable Writing color components into the framebuffer
+            // glColorMask specifies whether the individual color components in the frame buffer can or cannot be written.
+            // If red is GL_FALSE, for example, no change is made to the red component of any pixel in any of the color buffers,
+            // regardless of the drawing operation attempted. 
+            glColorMask(colorMask.r, colorMask.g, colorMask.b, colorMask.a);
+
         }
 
         // Given a json object, this function deserializes a PipelineState structure
