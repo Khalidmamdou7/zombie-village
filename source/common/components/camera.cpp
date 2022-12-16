@@ -36,9 +36,9 @@ namespace our {
         // - the up direction which is the vector (0,1,0) but after being transformed by M
         // then you can use glm::lookAt
         
-        glm::vec3 eye=M*glm::vec4(0,0,0,1);
-        glm::vec3 center=M*glm::vec4(0,0,-1,1);;
-        glm::vec3 up=M*glm::vec4(0,1,0,1);;
+        glm::vec3 eye{M*glm::vec4(0,0,0,1)};
+        glm::vec3 center{M*glm::vec4(0,0,-1,1)};
+        glm::vec3 up{M*glm::vec4(0,1,0,0)};
         glm::mat4 view_matrix=glm::lookAt(eye,center,up);
         return view_matrix;
     }

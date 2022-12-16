@@ -46,12 +46,11 @@ namespace our {
         template<typename T>
         T* getComponent(){
             //DONE: (Req 8) Go through the components list and find the first component that can be dynamically cast to "T*".
-            auto it=components.begin();
-            while(it!=components.end())
+            for(auto it=components.begin();it!=components.end();it++)
             {
-                if(dynamic_cast<T*>(*it)) //if cast did NOT result in NULL
-                    return dynamic_cast<T*>(*it);
-                std::advance(it,1);
+                T* cast=dynamic_cast<T*>(*it);
+                if(cast)
+                    return cast;
             }
             // Return the component you found, or return null of nothing was found.
             return nullptr;
@@ -73,12 +72,12 @@ namespace our {
         void deleteComponent(){
             //DONE: (Req 8) Go through the components list and find the first component that can be dynamically cast to "T*".
             // If found, delete the found component and remove it from the components list
-            // T* first_component=getComponent();
-            // if(first_component) //if NOT NULL i.e, there was a component that could be dynamically cast to T*
-            // {
-            //     delete *first_component;
-            //     components.erase(first_component);
-            // }
+            T* first_component=getComponent();
+             if(first_component) //if NOT NULL i.e, there was a component that could be dynamically cast to T*
+             {
+                delete *first_component;
+                components.erase(first_component);
+             }
         }
 
         // This template method searhes for a component of type T and deletes it
@@ -95,8 +94,7 @@ namespace our {
         template<typename T>
         void deleteComponent(T const* component){
             //DONE: (Req 8) Go through the components list and find the given component "component".
-            auto it=components.begin();
-            while(it!=components.end())
+            for(auto it=components.begin();it!=components.end();it++)
             {
                 if(it==component)
                 {
@@ -104,8 +102,6 @@ namespace our {
                     components.erase(it);
                     break;
                 }
-                else
-                std::advance(it,1);
             }
             // If found, delete the found component and remove it from the components list
         }
@@ -113,13 +109,12 @@ namespace our {
         // Since the entity owns its components, they should be deleted alongside the entity
         ~Entity(){
             //DONE: (Req 8) Delete all the components in "components".
-            auto it=components.begin();
-            while(it!=components.end())
+            
+            for(Component *comp : components)
             {
-                delete *it;
-                components.erase(it);
-                std::advance(it,1);
+                delete comp;
             }
+            components.clear();
             }
 
         // Entities should not be copyable
