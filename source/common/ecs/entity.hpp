@@ -96,7 +96,7 @@ namespace our {
             //DONE: (Req 8) Go through the components list and find the given component "component".
             for(auto it=components.begin();it!=components.end();it++)
             {
-                if(it==component)
+                if(*it==component)
                 {
                     delete *it;
                     components.erase(it);

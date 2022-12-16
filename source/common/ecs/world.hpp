@@ -41,7 +41,8 @@ namespace our {
         // The elements in the "markedForRemoval" set will be removed and deleted when "deleteMarkedEntities" is called.
         void markForRemoval(Entity* entity){
             //DONE: (Req 8) If the entity is in this world, add it to the "markedForRemoval" set.
-            markedForRemoval.insert(entity);
+            if(entities.find(entity)!=entities.end())
+                markedForRemoval.insert(entity);
         }
 
         // This removes the elements in "markedForRemoval" from the "entities" set.
@@ -65,6 +66,7 @@ namespace our {
                 delete ent;
             }
             markedForRemoval.clear();
+            entities.clear();
         }
 
         //Since the world owns all of its entities, they should be deleted alongside it.
