@@ -73,12 +73,12 @@ namespace our {
         void deleteComponent(){
             //DONE: (Req 8) Go through the components list and find the first component that can be dynamically cast to "T*".
             // If found, delete the found component and remove it from the components list
-            T* first_component=getComponent();
-            if(first_component) //if NOT NULL i.e, there was a component that could be dynamically cast to T*
-            {
-                delete *first_component;
-                components.erase(first_component);
-            }
+            // T* first_component=getComponent();
+            // if(first_component) //if NOT NULL i.e, there was a component that could be dynamically cast to T*
+            // {
+            //     delete *first_component;
+            //     components.erase(first_component);
+            // }
         }
 
         // This template method searhes for a component of type T and deletes it
