@@ -1,6 +1,7 @@
 #include "forward-renderer.hpp"
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
+#include <iostream>
 
 namespace our {
 
@@ -55,7 +56,7 @@ namespace our {
             //  - GL_READ_FRAMEBUFFER from which we can read pixels.
             //  - GL_FRAMEBUFFER which can be used for both reading and drawing.
             // since it's the bind target is not specified, we used the later.
-            glBindFramebuffer(GL_FRAMEBUFFER, postProcessFrameBuffer):
+            glBindFramebuffer(GL_FRAMEBUFFER, postprocessFrameBuffer);
 
             //TODO: (Req 11) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
@@ -64,6 +65,7 @@ namespace our {
             colorTarget->bind();
 
             // Allocating the texture memory for the color attachment
+            GLuint mip_levels = 1 + std::floor(std::log2(std::max<float>(windowSize.x, windowSize.y)));
             glTexStorage2D(GL_TEXTURE_2D, mip_levels, GL_RGBA8, windowSize.x, windowSize.y);
 
             // Attaching the color texture to the framebuffer
@@ -83,6 +85,9 @@ namespace our {
             glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTarget->getOpenGLName(), 0);
 
+            if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+                std::cerr << "Error::ForwardRenderer::initialize: Framebuffer is not complete!" << std::endl;
+            }
             
             //TODO: (Req 11) Unbind the framebuffer just to be safe
             // We unbind the framebuffer by binding the default framebuffer (0)
