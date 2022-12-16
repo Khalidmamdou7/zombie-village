@@ -85,6 +85,8 @@ namespace our {
 
             
             //TODO: (Req 11) Unbind the framebuffer just to be safe
+            // We unbind the framebuffer by binding the default framebuffer (0)
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             // Create a vertex array to use for drawing the texture
             glGenVertexArrays(1, &postProcessVertexArray);
