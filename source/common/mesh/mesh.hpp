@@ -31,32 +31,32 @@ namespace our {
            //TODO: (Req 2) Write this function
             // remember to store the number of elements in "elementCount" since you will need it for drawing
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
-            elementCount = elements.size();
+            
 
             // create the vertex array object to define how to read the vertex and element buffer during rendering
-            GLuint VAO;
+           
             glGenVertexArrays(1,&VAO);
             glBindVertexArray(VAO);
 
             // create a vertex buffer and bind it, then store the verteces data to it
-            GLuint VBO;
+       
             glGenBuffers(1, &VBO);
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             // the byte size of the vertices array is equal to size of one vertex in bytes multiplied by the size of the whole array
-            glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
             // create an element buffer, and store the elements data in it
-            GLuint EBO;
+           
             glGenBuffers(1,&EBO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
             // the byte size of the elements array is equal to size of one vertex in bytes multiplied by the size of the whole array
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER,elements.size() * sizeof(unsigned int), &elements[0], GL_STATIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,elements.size() * sizeof(unsigned int), elements.data(), GL_STATIC_DRAW);
 
 
             // We can tell OpenGL how it should interpret the vertex data (per vertex attribute) using glVertexAttribPointer: 
             // position attribute
             glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
-            glVertexAttribPointer(ATTRIB_LOC_POSITION, 3 , GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
+            glVertexAttribPointer(ATTRIB_LOC_POSITION, 3 , GL_FLOAT, false, sizeof(Vertex), (void *)0);
 
             // color attribute
             glEnableVertexAttribArray(ATTRIB_LOC_COLOR);
@@ -69,6 +69,12 @@ namespace our {
             // texture attribute
             glEnableVertexAttribArray(ATTRIB_LOC_TEXCOORD);
             glVertexAttribPointer(ATTRIB_LOC_TEXCOORD, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, tex_coord));
+                        
+            glGenBuffers(1, &EBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(unsigned int), elements.data(), GL_STATIC_DRAW);
+            glBindVertexArray(0);
+            elementCount = elements.size();
 
         }
 
@@ -76,7 +82,9 @@ namespace our {
         void draw() 
         {
             //TODO: (Req 2) Write this function 
-            glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, 0);
+            glBindVertexArray(VAO);
+            glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, (void *)0);
+            glBindVertexArray(0);
         }
 
         // this function should delete the vertex & element buffers and the vertex array object

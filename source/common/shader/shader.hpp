@@ -71,6 +71,7 @@ namespace our {
 
         void set(const std::string& uniform, glm::mat4 matrix) {
             //TODO: (Req 1) Send the given matrix 4x4 value to the given uniform
+            this->use();
             glUniformMatrix4fv(getUniformLocation(uniform), 1, GL_FALSE, &matrix[0][0]);
         }
         ShaderProgram(const ShaderProgram&) = delete;
