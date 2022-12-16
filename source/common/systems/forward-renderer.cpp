@@ -76,6 +76,10 @@ namespace our {
             depthTarget = our::texture_utils::empty(GL_DEPTH_COMPONENT24, windowSize);
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTarget->getOpenGLName(), 0);
 
+            if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+                std::cerr << "Error::ForwardRenderer::initialize: Framebuffer is not complete" << std::endl;
+            }
+
             
             //TODO: (Req 11) Unbind the framebuffer just to be safe
             // We unbind the framebuffer by binding the default framebuffer (0)
