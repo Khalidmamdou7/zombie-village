@@ -49,6 +49,13 @@ namespace our {
         // Then we check if there is a postprocessing shader in the configuration
         if(config.contains("postprocess")){
             //TODO: (Req 11) Create a framebuffer
+            glGenFramebuffers(1, &postprocessFrameBuffer);
+            // glBindFrameBuffer first parameter is the bind target, which could be:
+            //  - GL_DRAW_FRAMEBUFFER to which we can draw.
+            //  - GL_READ_FRAMEBUFFER from which we can read pixels.
+            //  - GL_FRAMEBUFFER which can be used for both reading and drawing.
+            // since it's the bind target is not specified, we used the later.
+            glBindFramebuffer(GL_FRAMEBUFFER, postProcessFrameBuffer):
 
             //TODO: (Req 11) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
