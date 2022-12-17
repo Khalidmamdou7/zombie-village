@@ -21,9 +21,9 @@ void main(){
     // To get the red channel, we move by amount STRENGTH to the left then sample another pixel from which we take the red channel
     // To get the blue channel, we move by amount STRENGTH to the right then sample another pixel from which we take the blue channel
     frag_color = vec4(
-        texture(tex, tex_coord - STRENGTH).r,
+        texture(tex, tex_coord - vec2(STRENGTH, 0.0)).r,
         texture(tex, tex_coord).g,
-        texture(tex, tex_coord + STRENGTH).b,
+        texture(tex, tex_coord + vec2(STRENGTH, 0.0)).b,
         texture(tex, tex_coord).a
         );
 
