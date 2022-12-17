@@ -50,10 +50,12 @@ namespace our {
         shader->set("alphaThreshold", alphaThreshold);
 
         // bind the texture
-        texture->bind();
+        if (texture)
+            texture->bind();
 
         //bind the sampler
-        sampler->bind(0);
+        if (sampler)
+            sampler->bind(0);
 
         //send the uint number to the uniform variable "tex"
         shader->set("tex", 0);
