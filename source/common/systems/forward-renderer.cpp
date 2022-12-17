@@ -61,7 +61,7 @@ namespace our {
             //TODO: (Req 11) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
             // The depth format can be (Depth component with 24 bits).
-            colorTarget = new Texture2D();
+            colorTarget = our::texture_utils::empty(GL_RGBA8, windowSize);
             colorTarget->bind();
 
             // Allocating the texture memory for the color attachment
@@ -78,11 +78,7 @@ namespace our {
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTarget->getOpenGLName(), 0);
 
             // Doing the same for the depth attachment
-            depthTarget = new Texture2D();
-            depthTarget->bind();
-            
-            // The depth attachment only needs 1 mipmap level
-            glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
+            depthTarget = our::texture_utils::empty(GL_DEPTH_COMPONENT24, windowSize);
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTarget->getOpenGLName(), 0);
 
             if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
