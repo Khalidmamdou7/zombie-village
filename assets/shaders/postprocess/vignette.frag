@@ -19,8 +19,7 @@ void main(){
     // while the texture coordinate space ranges from 0 to 1
     // We have the pixel's texture coordinate, how can we compute its location in the NDC space?
     vec2 texCoordInNDC = (tex_coord * 2) - 1;
-    vec2 squaredTexCoords = texCoordInNDC * texCoordInNDC;
+    float squaredTexCoords = dot(texCoordInNDC, texCoordInNDC);
     vec4 sceneColor = texture(tex, tex_coord);
-    vec4 vignette = sceneColor / (1 + vec4(squaredTexCoords, 0.0, 0.0));
-    frag_color = vignette;
+    frag_color = sceneColor / (1 + squaredTexCoords);
 }
