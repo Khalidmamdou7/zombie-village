@@ -49,6 +49,14 @@ namespace our {
            
             glGenBuffers(1,&EBO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            // glBufferData defines the data of the buffer, and it takes the following parameters:
+            // 1. the type of the buffer (GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER)
+            // 2. the size of the data in bytes
+            // 3. the data itself
+            // 4. the usage of the buffer (GL_STATIC_DRAW, GL_DYNAMIC_DRAW, or GL_STREAM_DRAW) where 
+            //    GL_STATIC_DRAW: the data will most likely not change at all or very rarely.
+            //    GL_DYNAMIC_DRAW: the data is likely to change a lot.
+            //    GL_STREAM_DRAW: the data will change every time it is drawn.
             // the byte size of the elements array is equal to size of one vertex in bytes multiplied by the size of the whole array
             glBufferData(GL_ELEMENT_ARRAY_BUFFER,elements.size() * sizeof(unsigned int), elements.data(), GL_STATIC_DRAW);
 
@@ -56,23 +64,30 @@ namespace our {
             // We can tell OpenGL how it should interpret the vertex data (per vertex attribute) using glVertexAttribPointer: 
             // position attribute
             glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
+            // glVertexAttribPointer takes the following parameters:
+            // 1. the index of the vertex attribute
+            // 2. the size of the vertex attribute
+            // 3. the type of the data
+            // 4. whether or not the data should be normalized
+            // 5. the stride (byte offset between consecutive attributes)
+            // 6. the offset of the first component of the attribute
             glVertexAttribPointer(ATTRIB_LOC_POSITION, 3 , GL_FLOAT, false, sizeof(Vertex), (void *)0);
 
             // color attribute
             glEnableVertexAttribArray(ATTRIB_LOC_COLOR);
+            // the size of the color attribute is 4 because it is a vec4 (r,g,b,a)
             glVertexAttribPointer(ATTRIB_LOC_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void *)offsetof(Vertex, color));
 
             // normal attribute
             glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);
+            // the size of the normal attribute is 3 because it is a vec3 (x,y,z)
             glVertexAttribPointer(ATTRIB_LOC_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normal));
 
             // texture attribute
             glEnableVertexAttribArray(ATTRIB_LOC_TEXCOORD);
+            // the size of the texture attribute is 2 because it is a vec2 (u,v)
             glVertexAttribPointer(ATTRIB_LOC_TEXCOORD, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, tex_coord));
                         
-            glGenBuffers(1, &EBO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(unsigned int), elements.data(), GL_STATIC_DRAW);
             glBindVertexArray(0);
             elementCount = elements.size();
 
@@ -83,7 +98,14 @@ namespace our {
         {
             //TODO: (Req 2) Write this function 
             glBindVertexArray(VAO);
+            // glDrawElements draws the elements of the mesh, and it takes the following parameters:
+            // 1. the type of the elements (GL_TRIANGLES, GL_LINES, GL_POINTS, etc)
+            // 2. the number of elements to draw
+            // 3. the type of the elements (GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, GL_UNSIGNED_INT)
+            // 4. the offset of the first element in the element buffer
             glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, (void *)0);
+
+            // unbind the vertex array object
             glBindVertexArray(0);
         }
 
