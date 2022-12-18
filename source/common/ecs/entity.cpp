@@ -12,11 +12,13 @@ namespace our {
     // its parent's parent's matrix and so on till you reach the root.
     glm::mat4 Entity::getLocalToWorldMatrix() const {
         //DONE: (Req 8) Write this function
-        if(!parent) //If parent is not NULL
+        // Check if this entity has a parent, if it does, then we will combine the local to world matrix
+        // of the parent with the local to world matrix of this entity
+        if(!parent) // base case: the entity has no parent
         {
-            return localTransform.toMat4(); //initialize local to world matrix
+            return localTransform.toMat4();
         } 
-        else
+        else // recursive case: the entity has a parent so we will combine the local to world matrix of the parent with the local to world matrix of this entity
             return parent->getLocalToWorldMatrix()*localTransform.toMat4();
     }
 

@@ -12,6 +12,7 @@ namespace our {
         // This constructor creates an OpenGL texture and saves its object name in the member variable "name" 
         Texture2D() {
             //TODO: (Req 5) Complete this function
+            // generate texture and get reference name
             glGenTextures(1,&name);
         };
 
@@ -29,13 +30,18 @@ namespace our {
         // This method binds this texture to GL_TEXTURE_2D
         void bind() const {
             //TODO: (Req 5) Complete this function
+
+            //texture units at 0
             glActiveTexture(GL_TEXTURE0);
+            //type of texture 2D
             glBindTexture(GL_TEXTURE_2D,name);
         }
 
         // This static method ensures that no texture is bound to GL_TEXTURE_2D
         static void unbind(){
             //TODO: (Req 5) Complete this function
+
+            //if it's with name , it will set it by 0
             glBindTexture(GL_TEXTURE_2D,0);
         }
 

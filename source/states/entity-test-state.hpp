@@ -55,6 +55,8 @@ class EntityTestState: public our::State {
             // Then we setup the material, send the transform matrix to the shader then draw the mesh
             our::Material *material=meshRenderer->material;
             material->setup();
+            // The transform matrix is the product of the VP matrix and the entity local to world matrix (Model matrix)
+            //
             material->shader->set("transform",VP*entity->getLocalToWorldMatrix());
             meshRenderer->mesh->draw();
         }

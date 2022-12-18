@@ -36,8 +36,11 @@ namespace our {
         // - the up direction which is the vector (0,1,0) but after being transformed by M
         // then you can use glm::lookAt
         
+        // Since it's a point w = 1.
         glm::vec3 eye{M*glm::vec4(0,0,0,1)};
+        // since it's a point w = 1.
         glm::vec3 center{M*glm::vec4(0,0,-1,1)};
+        // Since it's a vector w = 0.
         glm::vec3 up{M*glm::vec4(0,1,0,0)};
         glm::mat4 view_matrix=glm::lookAt(eye,center,up);
         return view_matrix;
@@ -55,14 +58,20 @@ namespace our {
         float aspectRatio=viewportSize.x/viewportSize.y;
         glm::mat4 projection_matrix;
 
+        // If the camera type is orthographic, then we need to create an orthographic projection matrix.
          if(cameraType == CameraType::ORTHOGRAPHIC)
          {
             float halfHeight = orthoHeight * 0.5f;
             float halfWidth = aspectRatio * halfHeight;
             projection_matrix=glm::ortho(-halfWidth,halfWidth,-halfHeight,halfHeight);
          }
-         else if(cameraType==CameraType::PERSPECTIVE)
+         else if(cameraType==CameraType::PERSPECTIVE) // If the camera type is perspective, then we need to create a perspective projection matrix.
          {
+            // The perspective projection matrix is created using the glm::perspective function, which takes:
+            // - the vertical field of view (fovY) (no need to pass the fovX since it is calculated by multiplyong fovY by aspectRatio)
+            // - the aspect ratio (aspectRatio)
+            // - the near plane (near)
+            // - the far plane (far)
             projection_matrix=glm::perspective(fovY,aspectRatio,near,far);
          }
         return projection_matrix;

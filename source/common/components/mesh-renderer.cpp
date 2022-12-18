@@ -12,6 +12,8 @@ namespace our {
         // you can use write: data["key"].get<T>().
         // Look at "source/common/asset-loader.hpp" to know how to use the static class AssetLoader.
         
+        // Using get() to get the value of the key "mesh" from the json object "data" and passing it to the AssetLoader to get the actual mesh
+        // T is a string in this case
         mesh=AssetLoader<Mesh>::get(data["mesh"].get<std::string>());
         material=AssetLoader<Material>::get(data["material"].get<std::string>());
     }

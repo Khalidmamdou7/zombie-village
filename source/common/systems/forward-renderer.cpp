@@ -25,8 +25,9 @@ namespace our {
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
             PipelineState skyPipelineState{};
             skyPipelineState.faceCulling.enabled = true;
-            skyPipelineState.depthTesting.enabled = true;
+            skyPipelineState.depthTesting.enabled = true;   
             skyPipelineState.depthTesting.function = GL_LEQUAL;
+            // We will draw the sphere of the sky from the inside, so we cull the front faces
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
         
@@ -179,14 +180,17 @@ namespace our {
         //TODO: (Req 9) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
         //glm::vec3 cameraForward = glm::vec3(0.0, 0.0, -1.0f);
+        // vec4 view camera to -z mult with getlocal to get world view
         glm::vec3 cameraForward =camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0, 0.0, -1.0f,0.0f);
 
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 9) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
-            if (first.localToWorld.length()>second.localToWorld.length())
+
+            auto F= glm::dot(cameraForward,first.center); // get distance from camera to first
+            auto S= glm::dot(cameraForward,second.center); // get distance from camera to second
+            if (F>S) // the fearthest must be drawn first
             {
-                //first.center.z * cameraforward.z >second.center.z * cameraforward.z
                 return true;
             }
             else{
@@ -194,7 +198,8 @@ namespace our {
             }
         });
 
-        //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP
+        //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP 
+        // it got camera view and mult with projection to get view projection
         glm::mat4 VP=camera->getProjectionMatrix(windowSize)* camera->getViewMatrix();
         //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
         glViewport(0,0,windowSize.x,windowSize.y);
@@ -202,6 +207,7 @@ namespace our {
         glClearColor(0.0f,0.0f,0.0f,1.0f);
         glClearDepth(1);
         //TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+        // it allows to clear color and depth to affect framebuffer
         glColorMask(true,true,true,true);
         glDepthMask(true);
 
@@ -218,7 +224,9 @@ namespace our {
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for (auto x: opaqueCommands)
         {
+            //Setting materials albedo
             x.material->setup();
+            // set transform to be equal the model view projection matrix for each render command
             x.material->shader->set("transform",VP*x.localToWorld);
             x.mesh->draw();
         }
@@ -228,9 +236,11 @@ namespace our {
             skyMaterial->setup();
             
             //TODO: (Req 10) Get the camera position
+            // it got camera position by mult with local to world to get world position by 0,0,0,1 to get vec4
             glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0f, 0.0f, 0.0f,1.0f);
              //glm::vec4 cameraPosition = camera->getViewMatrix() * glm::vec4(0.0f, 0.0f, 0.0f,1.0f);
-            //TODO: (Req 10) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)4
+            //TODO: (Req 10) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
+            // Changes the sky sphere center to camera position
             glm::mat4 modelMatrix = glm::mat4(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
@@ -248,6 +258,9 @@ namespace our {
                 0.0f, 0.0f, 1.0f, 1.0f
             );
             //TODO: (Req 10) set the "transform" uniform
+            // The transform uniform is the model-view-projection matrix for the sky sphere
+            // We want the sky sphere to be drawn behind everything, so we multiply the model matrix by the alwaysBehindTransform
+            // We also need to multiply by the camera view and projection matrices
             skyMaterial->shader->set("transform", alwaysBehindTransform* VP * modelMatrix);
             
             //TODO: (Req 10) draw the sky sphere
@@ -257,7 +270,9 @@ namespace our {
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for (auto x: transparentCommands)
         {
+            // Setting materials albedo
             x.material->setup();
+            // Setting transform uniform to be equal the model view projection matrix for each render command
             x.material->shader->set("transform",VP*x.localToWorld);
             x.mesh->draw();
         }

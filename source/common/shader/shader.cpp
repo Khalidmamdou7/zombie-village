@@ -32,13 +32,13 @@ bool our::ShaderProgram::attach(const std::string& filename, GLenum type) const 
     // Attach the shader source code to the shader object
     glShaderSource(shaderID, 1, &sourceCStr, nullptr);
     glCompileShader(shaderID);
-    if (checkForShaderCompilationErrors(shaderID) != "")
+    if (checkForShaderCompilationErrors(shaderID) != "") //check if there's error on compilation
     {
-        std::cout << checkForShaderCompilationErrors(shaderID);
+        std::cout << checkForShaderCompilationErrors(shaderID); // if there's error , print the message
         return false;
     }
     
-    glAttachShader(program, shaderID);
+    glAttachShader(program, shaderID); // attach sahder 
     return true;
 }
 
@@ -50,7 +50,7 @@ bool our::ShaderProgram::link() const {
     // an error in the given program. You should use it to check if there is a
     // linking error and print it so that you can know what is wrong with the
     // program. The returned string will be empty if there is no errors.
-    glLinkProgram(program);
+    glLinkProgram(program); // to link the program with vertex shader or geomtry shader or fragment shader, they will be used to create an executable
     if (checkForLinkingErrors(program) != "")
     {
         std::cout << checkForLinkingErrors(program);

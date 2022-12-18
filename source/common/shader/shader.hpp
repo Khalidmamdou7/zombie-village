@@ -29,7 +29,7 @@ namespace our {
 
         bool link() const;
 
-        void use() {
+        void use() { //Installs the program object specified as part of current rendering state.
             glUseProgram(program);
         }
 
@@ -74,11 +74,13 @@ namespace our {
             this->use();
             glUniformMatrix4fv(getUniformLocation(uniform), 1, GL_FALSE, &matrix[0][0]);
         }
-        ShaderProgram(const ShaderProgram&) = delete;
-        ShaderProgram& operator=(ShaderProgram&) = delete;
+
+        ShaderProgram(const ShaderProgram&) = delete; // to delete copy constrcutor and assignment operator
+        ShaderProgram& operator=(ShaderProgram&) = delete; //
         //TODO: (Req 1) Delete the copy constructor and assignment operator.
         //Question: Why do we delete the copy constructor and assignment operator?
         // To avoid copying the shader program, which could cause conflicts if one of the copies is deleted.
+        // to avoid conflict
     };
 
 }
