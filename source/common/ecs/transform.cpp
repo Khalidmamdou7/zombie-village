@@ -13,9 +13,13 @@ namespace our {
     glm::mat4 Transform::toMat4() const {
         //TODO: (Req 3) Write this function
         glm::mat4 scaling_matrix=glm::scale(glm::mat4(1.0f),scale);
+        // yawPitchRoll is a function that takes in the yaw, pitch and roll and returns a rotation matrix
+        // where yaw is the rotation around the y axis, pitch is the rotation around the x axis and roll is the rotation around the z axis
         glm::mat4 rotation_matrix=glm::yawPitchRoll(rotation.y,rotation.x,rotation.z);
+        // translation matrix is a matrix that translates the vertex positions by the given vector
         glm::mat4 translation_matrix=glm::translate(glm::mat4(1.0f),position);
 
+        // the order of transformations is: Scaling, Rotation then Translation
         glm::mat4 transformation_matrix=translation_matrix*rotation_matrix*scaling_matrix;
 
         return transformation_matrix; 
