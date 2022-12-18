@@ -51,8 +51,8 @@ our::Texture2D* our::texture_utils::loadImage(const std::string& filename, bool 
     //Bind the texture such that we upload the image data to its storage
     //TODO: (Req 5) Finish this function to fill the texture with the data found in "pixels"
     texture->bind();
+    // tzrget type 2d, level=0,internal format, width, height, border=0, format,type byte, data points to pixels
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,size.x,size.y,0,GL_RGBA,GL_UNSIGNED_BYTE,(void*) pixels);
-
     
     //boolean to know if it's true , it will do mimamp , levels as in slides
     if(generate_mipmap){

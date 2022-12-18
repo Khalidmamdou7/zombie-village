@@ -186,9 +186,9 @@ namespace our {
             //TODO: (Req 9) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
 
-            auto F= glm::dot(cameraForward,first.center);
-            auto S= glm::dot(cameraForward,second.center);
-            if (F>S)
+            auto F= glm::dot(cameraForward,first.center); // get distance from camera to first
+            auto S= glm::dot(cameraForward,second.center); // get distance from camera to second
+            if (F>S) // the fearthest must be drawn first
             {
                 return true;
             }
@@ -197,8 +197,8 @@ namespace our {
             }
         });
 
-        //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP
-        // it got camera view and mult with projection
+        //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP 
+        // it got camera view and mult with projection to get view projection
         glm::mat4 VP=camera->getProjectionMatrix(windowSize)* camera->getViewMatrix();
         //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
         glViewport(0,0,windowSize.x,windowSize.y);
