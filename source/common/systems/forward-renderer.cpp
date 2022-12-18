@@ -224,7 +224,9 @@ namespace our {
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for (auto x: opaqueCommands)
         {
+            //Setting materials albedo
             x.material->setup();
+            // set transform to be equal the model view projection matrix for each render command
             x.material->shader->set("transform",VP*x.localToWorld);
             x.mesh->draw();
         }
@@ -268,7 +270,9 @@ namespace our {
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for (auto x: transparentCommands)
         {
+            // Setting materials albedo
             x.material->setup();
+            // Setting transform uniform to be equal the model view projection matrix for each render command
             x.material->shader->set("transform",VP*x.localToWorld);
             x.mesh->draw();
         }
