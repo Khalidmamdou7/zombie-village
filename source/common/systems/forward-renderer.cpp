@@ -25,8 +25,9 @@ namespace our {
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
             PipelineState skyPipelineState{};
             skyPipelineState.faceCulling.enabled = true;
-            skyPipelineState.depthTesting.enabled = true;
+            skyPipelineState.depthTesting.enabled = true;   
             skyPipelineState.depthTesting.function = GL_LEQUAL;
+            // We will draw the sphere of the sky from the inside, so we cull the front faces
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
         
@@ -233,9 +234,11 @@ namespace our {
             skyMaterial->setup();
             
             //TODO: (Req 10) Get the camera position
+            // it got camera position by mult with local to world to get world position by 0,0,0,1 to get vec4
             glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0f, 0.0f, 0.0f,1.0f);
              //glm::vec4 cameraPosition = camera->getViewMatrix() * glm::vec4(0.0f, 0.0f, 0.0f,1.0f);
-            //TODO: (Req 10) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)4
+            //TODO: (Req 10) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
+            // Changes the sky sphere center to camera position
             glm::mat4 modelMatrix = glm::mat4(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
@@ -253,6 +256,9 @@ namespace our {
                 0.0f, 0.0f, 1.0f, 1.0f
             );
             //TODO: (Req 10) set the "transform" uniform
+            // The transform uniform is the model-view-projection matrix for the sky sphere
+            // We want the sky sphere to be drawn behind everything, so we multiply the model matrix by the alwaysBehindTransform
+            // We also need to multiply by the camera view and projection matrices
             skyMaterial->shader->set("transform", alwaysBehindTransform* VP * modelMatrix);
             
             //TODO: (Req 10) draw the sky sphere
