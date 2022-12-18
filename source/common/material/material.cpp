@@ -9,6 +9,7 @@ namespace our {
     void Material::setup() const {
         //DONE: (Req 7) Write this function
         pipelineState.setup();
+        // Set the shader to be used
         shader->use();
     }
 
@@ -55,7 +56,7 @@ namespace our {
 
         //bind the sampler
         if (sampler)
-            sampler->bind(0);
+            sampler->bind(0); // We bind the sampler to texture unit 0 (the first texture unit)
 
         //send the uint number to the uniform variable "tex"
         shader->set("tex", 0);
