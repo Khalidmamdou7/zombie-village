@@ -16,5 +16,6 @@ void main(){
     // from the texture at the received texture coordinates
 
     // frag_color = vec4(1.0);
+    // sample tex and it got texture coordinates
     frag_color = texture(tex,fs_in.tex_coord);
 }

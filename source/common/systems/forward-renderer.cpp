@@ -179,14 +179,17 @@ namespace our {
         //TODO: (Req 9) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
         //glm::vec3 cameraForward = glm::vec3(0.0, 0.0, -1.0f);
+        // vec4 view camera to -z mult with getlocal to get world view
         glm::vec3 cameraForward =camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0, 0.0, -1.0f,0.0f);
 
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 9) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
-            if (first.localToWorld.length()>second.localToWorld.length())
+
+            auto F= glm::dot(cameraForward,first.center);
+            auto S= glm::dot(cameraForward,second.center);
+            if (F>S)
             {
-                //first.center.z * cameraforward.z >second.center.z * cameraforward.z
                 return true;
             }
             else{
@@ -195,6 +198,7 @@ namespace our {
         });
 
         //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP
+        // it got camera view and mult with projection
         glm::mat4 VP=camera->getProjectionMatrix(windowSize)* camera->getViewMatrix();
         //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
         glViewport(0,0,windowSize.x,windowSize.y);
@@ -202,6 +206,7 @@ namespace our {
         glClearColor(0.0f,0.0f,0.0f,1.0f);
         glClearDepth(1);
         //TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+        // it allows to clear color and depth to affect framebuffer
         glColorMask(true,true,true,true);
         glDepthMask(true);
 

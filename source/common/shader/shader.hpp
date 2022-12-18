@@ -74,6 +74,7 @@ namespace our {
             this->use();
             glUniformMatrix4fv(getUniformLocation(uniform), 1, GL_FALSE, &matrix[0][0]);
         }
+
         ShaderProgram(const ShaderProgram&) = delete;
         ShaderProgram& operator=(ShaderProgram&) = delete;
         //TODO: (Req 1) Delete the copy constructor and assignment operator.
