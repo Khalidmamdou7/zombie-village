@@ -118,6 +118,9 @@ class Menustate: public our::State {
         } else if(keyboard.justPressed(GLFW_KEY_ESCAPE)) {
             // If the escape key is pressed in this frame, exit the game
             getApp()->close();
+        } else if(keyboard.justPressed(GLFW_KEY_HOME)) {
+            // If the F11 key is pressed in this frame, toggle fullscreen
+            getApp()->changeState("hurt");
         }
 
         // Get a reference to the mouse object and get the current mouse position
