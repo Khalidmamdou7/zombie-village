@@ -5,7 +5,9 @@
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
-
+#include"IsCollide.hpp"
+#include<iostream>
+using namespace std;
 namespace our {
 
     // Given a json object, this function picks and creates a component in the given entity
@@ -22,6 +24,10 @@ namespace our {
             component = entity->addComponent<MovementComponent>();
         } else if(type == MeshRendererComponent::getID()){
             component = entity->addComponent<MeshRendererComponent>();
+        }else if(type == IsCollide::getID())
+        { 
+            component = entity->addComponent<IsCollide>();
+            cout<<"and collider"<<endl;
         }
         if(component) component->deserialize(data);
     }

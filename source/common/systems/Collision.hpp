@@ -14,6 +14,7 @@
 #include "../application.hpp"
 
 
+int health=2;
 
 using namespace std;
 namespace our
@@ -32,18 +33,21 @@ namespace our
             vector<IsCollide*> allColl;
 
             for(auto entity : world->getEntities()){
-                if(auto collider =entity->getComponent<IsCollide>(); collider)
+                //cout<<"ana ana ana"<<endl;
+                auto collider =entity->getComponent<IsCollide>();
+                if(collider)
                 {
+                    //cout<<"ana ana ana"<<endl;
                     allColl.push_back(collider);
                 }
             }
-
             for (auto First : allColl)
 			{
 				for (auto Second : allColl)
 				{
 					if (First != Second)
 					{
+                        //cout<<"ana ana ana"<<endl;
 						auto Name1 = First->getOwner()->name;
 						auto Name2 = Second->getOwner()->name;
 						auto center1 = First->getOwner()->getLocalToWorldMatrix() * glm::vec4(0, 0, 0, 1);
@@ -53,17 +57,50 @@ namespace our
                         if(dist<0){
                             dist=dist*-1;
                         }
-						if (First->Raduis+Second->Raduis <= dist) 
+						if (First->Raduis+Second->Raduis >= dist) 
 						{
                             if(Name1=="sword" && Name2=="zombie")
                             {
+                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
                                 world->markForRemoval(Second->getOwner());
+                                //world->deleteMarkedEntities();
+                            }
+                            else if(Name1=="zombie" && Name2=="sword")
+                            {
+                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
+                                world->markForRemoval(First->getOwner());
                                 world->deleteMarkedEntities();
                             }
-                            if(Name1=="zombie" && Name2=="sword")
+
+                            if(Name1=="player" && Name2=="zombie")
                             {
-                                world->markForRemoval(Second->getOwner());
-                                world->deleteMarkedEntities();
+                                health-=1;
+                                if(health==1)
+                                {
+                                    //app->changestate("Damaged")
+                                }
+                                else if(health==0)
+                                {
+                                    //app->changestate("lose")
+                                }
+                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
+                                // world->markForRemoval(First->getOwner());
+                                //world->deleteMarkedEntities();
+                            }
+                            else if(Name1=="zombie" && Name2=="player")
+                            {
+                                health-=1;
+                                if(health==1)
+                                {
+
+                                }
+                                else if(health==0)
+                                {
+
+                                }
+                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
+                                //world->markForRemoval(Second->getOwner());
+                                //world->deleteMarkedEntities();
                             }
 						}
 					}

@@ -165,7 +165,7 @@
                     },
                     {
                         "type": "IsCollide",
-                        "Raduis": 1
+                        "Raduis": 0.1
                     }
                 ],
                 "children": [
@@ -195,7 +195,7 @@
                             },
                             {
                                 "type": "IsCollide",
-                                "Raduis": 1
+                                "Raduis": 0.1
                             }
                         ]
                     }
@@ -237,12 +237,20 @@
                         "type": "Mesh Renderer",
                         "mesh": "player",
                         "material": "Human"
-                    }//,
+                    },
                     // {
                     //     "type": "Movement",
                     //     "linearVelocity": [0, 0.1, 0],
                     //     "angularVelocity": [0, 45, 0]
                     // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
                 ]
             },
             {
@@ -255,12 +263,20 @@
                         "type": "Mesh Renderer",
                         "mesh": "player",
                         "material": "Human"
-                    }//,
+                    },
                     // {
                     //     "type": "Movement",
                     //     "linearVelocity": [0, 0.1, 0],
                     //     "angularVelocity": [0, 45, 0]
                     // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
                 ]
             },
             {
@@ -273,12 +289,20 @@
                         "type": "Mesh Renderer",
                         "mesh": "player",
                         "material": "Human"
-                    }//,
+                    },
                     // {
                     //     "type": "Movement",
                     //     "linearVelocity": [0, 0.1, 0],
                     //     "angularVelocity": [0, 45, 0]
                     // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
                 ]
             },
             {
@@ -291,12 +315,20 @@
                         "type": "Mesh Renderer",
                         "mesh": "player",
                         "material": "Human"
-                    }//,
+                    },
                     // {
                     //     "type": "Movement",
                     //     "linearVelocity": [0, 0.1, 0],
                     //     "angularVelocity": [0, 45, 0]
                     // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
                 ]
             },
             {

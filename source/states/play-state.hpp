@@ -22,6 +22,7 @@ class Playstate: public our::State {
 
     void onInitialize() override {
         // First of all, we get the scene configuration from the app config
+        
         auto& config = getApp()->getConfig()["scene"];
         // If we have assets in the scene config, we deserialize them
         if(config.contains("assets")){
@@ -44,7 +45,6 @@ class Playstate: public our::State {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime);
-
         //.update collision
         collision.update(&world, (float)deltaTime);
         // And finally we use the renderer system to draw the scene
@@ -54,10 +54,9 @@ class Playstate: public our::State {
         auto& keyboard = getApp()->getKeyboard();
 
         if(keyboard.justPressed(GLFW_KEY_ESCAPE)){
-            // If the escape  key is pressed in this frame, go to the play state
+            // If the escape  key is pressed in this frame, go to the menu state
             getApp()->changeState("menu");
         }
-
         // TODO collesion
         // TODO check winning state
         // TODO check lossing state
