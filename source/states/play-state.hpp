@@ -16,6 +16,8 @@ class Playstate: public our::State {
     our::FreeCameraControllerSystem cameraController;
     our::MovementSystem movementSystem;
 
+    //our::CollisionSystem Collission;
+
     void onInitialize() override {
         // First of all, we get the scene configuration from the app config
         auto& config = getApp()->getConfig()["scene"];
@@ -38,6 +40,9 @@ class Playstate: public our::State {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime);
+
+        //.update collision
+        
         // And finally we use the renderer system to draw the scene
         renderer.render(&world);
 
@@ -48,6 +53,10 @@ class Playstate: public our::State {
             // If the escape  key is pressed in this frame, go to the play state
             getApp()->changeState("menu");
         }
+
+        // TODO collesion
+        // TODO check winning state
+        // TODO check lossing state
     }
 
     void onDestroy() override {
