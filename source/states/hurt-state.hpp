@@ -49,6 +49,19 @@ class Hurtstate: public our::State {
             // If the escape  key is pressed in this frame, go to the play state
             getApp()->changeState("menu");
         }
+
+        int count = 0;
+        for(auto entity : world.getEntities())
+        {
+            if(entity->name == "zombie")
+            {
+                count++;
+            }
+        }
+        if (count == 0)
+        {
+           getApp()->changeState("win");
+        }
     }
 
     void onDestroy() override {

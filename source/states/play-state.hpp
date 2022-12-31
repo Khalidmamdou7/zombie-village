@@ -59,6 +59,18 @@ class Playstate: public our::State {
         }
         // TODO check winning state
         // TODO check lossing state
+        int count = 0;
+        for(auto entity : world.getEntities())
+        {
+            if(entity->name == "zombie")
+            {
+                count++;
+            }
+        }
+        if (count == 0)
+        {
+           getApp()->changeState("win");
+        }
     }
 
     void onDestroy() override {
