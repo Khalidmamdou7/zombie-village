@@ -3,6 +3,8 @@
 #include "../ecs/component.hpp"
 #include "../deserialize-utils.hpp"
 
+#include <iostream>
+
 namespace our
 {
 
@@ -14,6 +16,7 @@ namespace our
 
         //default value to everything read
         lightTypeStr = data.value("typeOfLight", "DIRECTIONAL");
+        std::cout << "extracted light type: " << lightTypeStr << std::endl; 
 
         //set light type (integer) according to string read from the json file
         if (lightTypeStr == "DIRECTIONAL")
@@ -25,7 +28,12 @@ namespace our
         else if (lightTypeStr == "SPOT")
             lightType =2;
 
-        
+        // reading the color attribute of the light
+        color = glm::vec4(data.value("color", glm::vec3(1, 1, 1)), 1);
+
+        // reading the direction vector
+        direction = glm::vec3(data.value("direction", glm::vec3(0, 0, 1)));
+
         //reading the diffuse vector
         diffuse = glm::vec3(data.value("diffuse", glm::vec3(1, 1, 1)));
 

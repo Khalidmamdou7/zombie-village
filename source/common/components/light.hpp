@@ -25,6 +25,8 @@ namespace our {
         glm::vec3 diffuse,specular,attenuation; 
         glm::vec4 color;
         glm::vec2 cone_angles; 
+        glm::vec3 direction; // Used for Directional and Spot Lights only
+
 
         //In json file, type of light would be specified as string
         std::string lightTypeStr;
