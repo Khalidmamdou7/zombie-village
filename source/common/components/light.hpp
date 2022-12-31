@@ -21,9 +21,9 @@ namespace our {
     class LightComponent : public Component {
     public:
         //Data that will be read from the json file, except position and direction as they are calculated from the entity component in the forward renderer
-        int lightType; 
+        LightType lightType;
         glm::vec3 diffuse,specular,attenuation; 
-        glm::vec4 color;
+        glm::vec3 color;
         glm::vec2 cone_angles; 
         glm::vec3 direction; // Used for Directional and Spot Lights only
 

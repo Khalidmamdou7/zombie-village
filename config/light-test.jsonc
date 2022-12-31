@@ -30,7 +30,7 @@
                 },
                 "lit":{
                     "vs":"assets/shaders/light.vert",
-                    "fs":"assets/shaders/light.frag"
+                    "fs":"assets/shaders/light_array.frag"
                 }
             },
             "textures":{
@@ -100,8 +100,8 @@
                     "sampler": "pixelated"
                 },
                 "grass":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -115,8 +115,8 @@
                     "sampler": "default"
                 },
                 "monkey":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -125,17 +125,13 @@
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
                     "texture": "monkey",
                     "sampler": "default",
-                    "albedo": "wood_albedo",
-                    "roughness": "wood_roughness",
-                    "specular": "wood_specular",
-                    "ambient_occlusion": "suzanne_ambient_occlusion"
+                    "emissive": "asphalt_emissive"
                 },
                 "moon":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -146,7 +142,11 @@
                     },
                     "tint": [1, 1, 1, 1],
                     "texture": "moon",
-                    "sampler": "default"
+                    "sampler": "default",
+                    "albedo": "moon",
+                    "roughness": "moon",
+                    "specular": "moon",
+                    "emissive": "moon"
                 }
             }
         },
@@ -276,19 +276,6 @@
                     {
                         "type": "Movement",
                         "angularVelocity": [0, 90, 0]
-                    }
-                ]
-            },
-            {
-                "position": [0, 1, -4],
-                "direction": [0, 0, 1],
-                "rotation": [0, 0, 0],
-                "scale": [1, 1, 1],
-                "components": [
-                    {
-                        "type": "light",
-                        "typeOfLight": "SPOT",
-                        "color": [1, 0.1, 0.2]
                     }
                 ]
             }

@@ -20,19 +20,19 @@ namespace our
 
         //set light type (integer) according to string read from the json file
         if (lightTypeStr == "DIRECTIONAL")
-            lightType = 0;
+            lightType = LightType::DIRECTIONAL;
 
         else if (lightTypeStr == "POINT")
-            lightType = 1;
+            lightType = LightType::POINT;
 
         else if (lightTypeStr == "SPOT")
-            lightType =2;
+            lightType = LightType::SPOT;
 
         // reading the color attribute of the light
-        color = glm::vec4(data.value("color", glm::vec3(1, 1, 1)), 1);
+        color = glm::vec3(data.value("color", glm::vec3(1, 1, 1)));
 
         // reading the direction vector
-        direction = glm::vec3(data.value("direction", glm::vec3(0, 0, 1)));
+        direction = glm::vec3(data.value("direction", glm::vec3(0, -1, 1)));
 
         //reading the diffuse vector
         diffuse = glm::vec3(data.value("diffuse", glm::vec3(1, 1, 1)));
@@ -41,14 +41,14 @@ namespace our
         specular = glm::vec3(data.value("specular", glm::vec3(1, 1, 1)));
 
         //Attenuation vector is only considered with POINT and SPOT light types 
-        if (lightType != 0)
+        if (lightType != LightType::DIRECTIONAL)
         {
         attenuation = glm::vec3(data.value("attenuation", glm::vec3(1, 0, 0)));
         }
 
         //If SPOT light type then read the inner and outer cone angles
         //In json degrees, therefore here convert them to radians
-        if (lightType ==2)
+        if (lightType == LightType::SPOT)
         {  
         cone_angles.x = glm::radians((float)data.value("cone_angles.in",10));
         cone_angles.y = glm::radians((float)data.value("cone_angles.out",80));

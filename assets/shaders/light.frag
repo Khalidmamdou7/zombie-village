@@ -81,15 +81,15 @@ void main(){
         vec3 sky_light=mix(sky.middle, sky.bottom, normal.y * normal.y);
 
 
-    // frag_color = vec4(material_emissive + material_ambient  , 1.0);
-    frag_color = vec4(0.0,0.0,0.0,1.0);
+    frag_color = vec4(material_emissive + material_ambient  , 1.0);
+    // frag_color = vec4(0.0,0.0,0.0,1.0);
 
     //applying light on the material constants
     for(int i = 0; i < min(MAX_LIGHTS, light_count); i++){
         Light light = lights[i];
 
         //We multiply by -ve since lambart assumes the light direction from point to light and we want from light to point
-        vec3 direction_to_light = -1*light.direction;
+        vec3 direction_to_light = light.direction;
 
         //Will not implement if directional because it has constant direction (also no position)
         if(light.type != DIRECTIONAL){
