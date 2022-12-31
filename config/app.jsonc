@@ -161,7 +161,7 @@
         "world":[
             {
                 "name":"player",
-                "position": [0, 0.2, 10],
+                "position": [0, 0.2, 8],
                 "components": [
                     {
                         "type": "Camera"
@@ -346,11 +346,16 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "grass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
         ////////////////front side of fences/////////////////////////////////
             {
+                "name":"wall",
                 "position": [8, 1, -10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -359,10 +364,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [4, 1, -10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -371,10 +381,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [0, 1, -10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -383,10 +398,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [-4, 1, -10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -395,10 +415,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [-8, 1, -10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -407,11 +432,16 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
         ////////////////back side of fences/////////////////////////////////
             {
+                "name":"wall",
                 "position": [8, 1, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -420,10 +450,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [4, 1, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -432,10 +467,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [0, 1, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -444,10 +484,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [-4, 1, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -456,10 +501,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             {
+                "name":"wall",
                 "position": [-8, 1, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -468,11 +518,16 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             },
             //////////////////////////////////rigth side of the fences/////////////////////////////////
             {
+                "name":"wall",
                 "position": [10, 1, -8],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -481,10 +536,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [10, 1, -4],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -493,10 +553,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [10, 1, 0],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -505,10 +570,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [10, 1, 4],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -517,10 +587,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [10, 1, 8],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -529,11 +604,16 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             //////////////////////////////////left side of the fences/////////////////////////////////
             {
+                "name":"wall",
                 "position": [-10, 1, -8],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -542,10 +622,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [-10, 1, -4],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -554,10 +639,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [-10, 1, 0],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -566,10 +656,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [-10, 1, 4],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -578,10 +673,15 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 
             {
+                "name":"wall",
                 "position": [-10, 1, 8],
                 "rotation": [0, 90, 0],
                 "scale": [2, 2, 2],
@@ -590,6 +690,10 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
                     }
                 ]
             }, 

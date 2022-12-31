@@ -32,15 +32,8 @@ namespace our
         void update(World* world, float deltaTime) {
             vector<IsCollide*> allColl;
 
-            
-            // for(auto entity : world->getEntities()){
-            //     auto collider =entity->getComponent<IsCollide>();
-            //     if(collider)
-            //     {
-            //         allColl.push_back(collider);
-            //     }
-            // }
 
+            Entity *cam=nullptr;
             for(auto entity : world->getEntities()){
                 //cout<<"ana ana ana"<<endl;
                 auto collider =entity->getComponent<IsCollide>();
@@ -48,6 +41,18 @@ namespace our
                 {
                     //cout<<"ana ana ana"<<endl;
                     allColl.push_back(collider);
+                }
+                if(entity->name=="player") //to save cam entity
+                {
+                    cam=entity;
+                    if(cam->localTransform.position.x <-10 || cam->localTransform.position.x >10)
+                    {
+                        app->changeState("hurt");
+                    }
+                    if(cam->localTransform.position.y <-10 || cam->localTransform.position.y >10)
+                    {
+                        app->changeState("hurt");
+                    }
                 }
             }
             for (auto First : allColl)
@@ -95,9 +100,7 @@ namespace our
                                 {
                                     app->changeState("lose");
                                 }
-                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
-                                // world->markForRemoval(First->getOwner());
-                                //world->deleteMarkedEntities();
+
                             }
                             else if(Name1=="zombie" && Name2=="player")
                             {
@@ -105,18 +108,25 @@ namespace our
                                 {
                                     world->markForRemoval(First->getOwner());
                                     world->deleteMarkedEntities();
-                                    //app->changestate("Damaged")
                                     cout<<"Got hurted"<<endl;
                                     app->changeState("hurt");
                                 }
-                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
-                                //world->markForRemoval(Second->getOwner());
-                                //world->deleteMarkedEntities();
                                 if(health)
                                 {
                                     app->changeState("lose");
                                 }
                             }
+
+                            if(Name1=="player" && Name2=="wall")
+                            {
+                                app->changeState("hurt");
+                            }
+                            else if(Name1=="wall" && Name2=="player")
+                            {
+                                app->changeState("hurt");
+                            }
+
+
 						}
 					}
 				}
