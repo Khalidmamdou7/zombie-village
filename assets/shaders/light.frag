@@ -1,5 +1,7 @@
 #version 330 core
 
+// #include "light_common.glsl"
+
 in Varyings {
     vec4 color;
     vec2 tex_coord;
@@ -18,7 +20,7 @@ struct Material {
     sampler2D specular;
     sampler2D roughness;
     sampler2D ambient_occlusion;
-    sampler2D emission;
+    sampler2D emissive;
 };
 
 #define DIRECTIONAL 0
@@ -47,7 +49,7 @@ uniform SkyStruct sky;
 
 //From angle between normal and light direction on the object
 float lambert(vec3 N, vec3 L){
-    return max(0, dot(N, L));
+    return max(0.0f, dot(N, L));
 }
 
 #define MAX_LIGHTS 8
@@ -87,7 +89,7 @@ void main(){
         Light light = lights[i];
 
         //We multiply by -ve since lambart assumes the light direction from point to light and we want from light to point
-        vec3 direction_to_light = - light.direction;
+        vec3 direction_to_light = -1*light.direction;
 
         //Will not implement if directional because it has constant direction (also no position)
         if(light.type != DIRECTIONAL){
@@ -118,7 +120,7 @@ void main(){
            */
             if(light.type == SPOT){
                 //outer cone - inner cone
-                float angle = acos(-dot(light.direction, light_vec));
+                float angle = acos(-dot(light.direction, direction_to_light));
                 attenuation *= smoothstep(light.cone_angles.y, light.cone_angles.x, angle);
             }
         }

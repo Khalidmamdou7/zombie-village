@@ -121,7 +121,7 @@ namespace our {
             glActiveTexture(GL_TEXTURE4);  
             emissive->bind();
             sampler->bind(4);
-            shader->set("material.emission",4);
+            shader->set("material.emissive",4);
         }
         glActiveTexture(GL_TEXTURE0);
     }
