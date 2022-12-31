@@ -126,6 +126,8 @@ namespace our {
             // so it is more performant to disable the depth mask
             postprocessMaterial->pipelineState.depthMask = false;
         }
+
+        
     }
 
     void ForwardRenderer::destroy(){
@@ -152,6 +154,8 @@ namespace our {
     void ForwardRenderer::render(World* world){
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent* camera = nullptr;
+
+        lights.clear();
         opaqueCommands.clear();
         transparentCommands.clear();
         for(auto entity : world->getEntities()){
@@ -172,6 +176,11 @@ namespace our {
                 // Otherwise, we add it to the opaque command list
                     opaqueCommands.push_back(command);
                 }
+            }
+            // If this entity has a light component
+            if(auto light = entity->getComponent<LightComponent>(); light){
+                // We add it to the list of lights
+                lights.push_back(light);
             }
         }
 
