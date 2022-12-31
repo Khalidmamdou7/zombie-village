@@ -33,13 +33,13 @@ namespace our
             vector<IsCollide*> allColl;
 
             
-            for(auto entity : world->getEntities()){
-                auto collider =entity->getComponent<IsCollide>();
-                if(collider)
-                {
-                    allColl.push_back(collider);
-                }
-            }
+            // for(auto entity : world->getEntities()){
+            //     auto collider =entity->getComponent<IsCollide>();
+            //     if(collider)
+            //     {
+            //         allColl.push_back(collider);
+            //     }
+            // }
 
             for(auto entity : world->getEntities()){
                 //cout<<"ana ana ana"<<endl;

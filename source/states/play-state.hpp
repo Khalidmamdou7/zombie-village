@@ -9,6 +9,7 @@
 #include <asset-loader.hpp>
 
 #include <systems/Collision.hpp>
+
 // This state shows how to use the ECS framework and deserialization.
 class Playstate: public our::State {
 
@@ -71,6 +72,7 @@ class Playstate: public our::State {
         {
            getApp()->changeState("win");
         }
+
     }
 
     void onDestroy() override {

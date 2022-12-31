@@ -20,28 +20,61 @@ namespace our
         // This should be called every frame to update all entities containing a MovementComponent. 
         void update(World* world, float deltaTime) {
 
-            // auto x=0;
+
+            // vector<IsCollide*> allColl;
+
+            
             // for(auto entity : world->getEntities()){
-            //     //cout<<"ana ana ana"<<endl;
-            //     auto cam =entity->getComponent<CameraComponent>();
-            //     if(cam)
+            //     auto collider =entity->getComponent<IsCollide>();
+            //     if(collider)
             //     {
-            //         x= cam->getOwner()->getLocalToWorldMatrix * glm::vec4(0, 0, 0, 1);
-            //         cout<<x<<endl;
+            //         allColl.push_back(collider);
             //     }
             // }
 
+            // for (auto First : allColl)
+            // {
+            //     auto Name1 = First->getOwner()->name;
+            //     if(Name1 =="zombie")
+            //     {
+
+            //     }
+            // }
+
+            //(zombies position - camera position).normalized *speed
+            // direction= (zombies position - camera position)
+            // deltatime ----> dirction
+
+
             // For each entity in the world
+
+            
             for(auto entity : world->getEntities()){
                 // Get the movement component if it exists
                 MovementComponent* movement = entity->getComponent<MovementComponent>();
+                
+                glm::vec3 cam={0, 0.2, 10};
+                
+                for(auto entity : world->getEntities()){
+                    if(entity->name=="player")
+                    {
+                        cam=entity->localTransform.position;
+                    }
+                    
+            }
+                
                 // If the movement component exists
                 if(movement){
                     // Change the position and rotation based on the linear & angular velocity and delta time.
-                    entity->localTransform.position += deltaTime * movement->linearVelocity;
-                    //entity->localTransform.position += deltaTime *x;
+                    if(entity->name=="zombie")
+                    {
+                        auto dirct=(cam-entity->localTransform.position);
+                        dirct=normalize(dirct);
+                        //entity->localTransform.position += deltaTime * movement->linearVelocity;
+                        entity->localTransform.position += deltaTime * dirct;
 
-                    entity->localTransform.rotation += deltaTime * movement->angularVelocity;
+                        entity->localTransform.rotation += deltaTime * movement->angularVelocity;
+                    }
                 }
                 
             }
