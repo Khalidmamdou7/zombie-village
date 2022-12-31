@@ -9,6 +9,7 @@
 
 #include <functional>
 #include <array>
+#include <systems/Collision.hpp>
 
 // This struct is used to store the location and size of a button and the code it should execute when clicked
 struct Button {
@@ -110,6 +111,7 @@ class Lossstate: public our::State {
 
     void onDraw(double deltaTime) override {
         // Get a reference to the keyboard object
+        health=false;
         auto& keyboard = getApp()->getKeyboard();
 
         if(keyboard.justPressed(GLFW_KEY_SPACE)){

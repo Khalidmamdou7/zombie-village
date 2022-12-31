@@ -76,13 +76,11 @@ namespace our
                             {
                                 if(!health)
                                 {
-                                    health=true;
                                     world->markForRemoval(Second->getOwner());
                                     world->deleteMarkedEntities();
                                     //app->changestate("Damaged")
                                     cout<<"Got hurted"<<endl;
                                     app->changeState("hurt");
-                                    
                                 }
                                 if(health)
                                 {
@@ -92,26 +90,24 @@ namespace our
                                 // world->markForRemoval(First->getOwner());
                                 //world->deleteMarkedEntities();
                             }
-                            // else if(Name1=="zombie" && Name2=="player")
-                            // {
-                            //     if(!health)
-                            //     {
-                            //         health=true;
-                            //         world->markForRemoval(First->getOwner());
-                            //         world->deleteMarkedEntities();
-                            //         //app->changestate("Damaged")
-                            //         cout<<"Got hurted"<<endl;
-                            //         app->changeState("hurt");
-                                   
-                            //     }
-                            //     // cout<<"Coll ooooooooooooooooooooh"<<endl;
-                            //     //world->markForRemoval(Second->getOwner());
-                            //     //world->deleteMarkedEntities();
-                            //     if(health)
-                            //     {
-                            //         app->changeState("lose");
-                            //     }
-                            // }
+                            else if(Name1=="zombie" && Name2=="player")
+                            {
+                                if(!health)
+                                {
+                                    world->markForRemoval(First->getOwner());
+                                    world->deleteMarkedEntities();
+                                    //app->changestate("Damaged")
+                                    cout<<"Got hurted"<<endl;
+                                    app->changeState("hurt");
+                                }
+                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
+                                //world->markForRemoval(Second->getOwner());
+                                //world->deleteMarkedEntities();
+                                if(health)
+                                {
+                                    app->changeState("lose");
+                                }
+                            }
 						}
 					}
 				}
