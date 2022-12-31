@@ -20,27 +20,6 @@ namespace our
         // This should be called every frame to update all entities containing a MovementComponent. 
         void update(World* world, float deltaTime) {
 
-
-            // vector<IsCollide*> allColl;
-
-            
-            // for(auto entity : world->getEntities()){
-            //     auto collider =entity->getComponent<IsCollide>();
-            //     if(collider)
-            //     {
-            //         allColl.push_back(collider);
-            //     }
-            // }
-
-            // for (auto First : allColl)
-            // {
-            //     auto Name1 = First->getOwner()->name;
-            //     if(Name1 =="zombie")
-            //     {
-
-            //     }
-            // }
-
             //(zombies position - camera position).normalized *speed
             // direction= (zombies position - camera position)
             // deltatime ----> dirction
@@ -53,6 +32,7 @@ namespace our
                 // Get the movement component if it exists
                 MovementComponent* movement = entity->getComponent<MovementComponent>();
                 
+                //saving player entity on cam to get position
                 glm::vec3 cam={0, 0.2, 10};
                 
                 for(auto entity : world->getEntities()){
@@ -62,15 +42,20 @@ namespace our
                     }
                     
             }
-                
+                //editing movement to make zombies move to the player 
+
+
                 // If the movement component exists
                 if(movement){
                     // Change the position and rotation based on the linear & angular velocity and delta time.
                     if(entity->name=="zombie")
                     {
+                        //getting direction (player position - zombie position)
                         auto dirct=(cam-entity->localTransform.position);
+                        // then normalize it 
                         dirct=normalize(dirct);
                         //entity->localTransform.position += deltaTime * movement->linearVelocity;
+                        //making entity position which is zombie equals delta time * normalized direction
                         entity->localTransform.position += deltaTime * dirct;
 
                         entity->localTransform.rotation += deltaTime * movement->angularVelocity;
