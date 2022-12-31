@@ -17,13 +17,14 @@
 #include "states/material-test-state.hpp"
 #include "states/entity-test-state.hpp"
 #include "states/renderer-test-state.hpp"
+#include "states/light-test-state.hpp"
 
 int main(int argc, char** argv) {
     
     flags::args args(argc, argv); // Parse the command line arguments
     // config_path is the path to the json file containing the application configuration
     // Default: "config/app.json"
-    std::string config_path = args.get<std::string>("c", "config/app.jsonc");
+    std::string config_path = args.get<std::string>("c", "config/light-test.jsonc");
     // run_for_frames is how many frames to run the application before automatically closing
     // This is useful for testing multiple configurations in a batch
     // Default: 0 where the application runs indefinitely until manually closed
@@ -55,6 +56,8 @@ int main(int argc, char** argv) {
     app.registerState<MaterialTestState>("material-test");
     app.registerState<EntityTestState>("entity-test");
     app.registerState<RendererTestState>("renderer-test");
+    app.registerState<LightTestState>("light-test");
+
     // Then choose the state to run based on the option "start-scene" in the config
     if(app_config.contains(std::string{"start-scene"})){
         app.changeState(app_config["start-scene"].get<std::string>());

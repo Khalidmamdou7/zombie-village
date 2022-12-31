@@ -3,6 +3,8 @@
 #include "../asset-loader.hpp"
 #include "deserialize-utils.hpp"
 
+#include <iostream>
+
 namespace our {
 
     // This function should setup the pipeline state and set the shader to be used
@@ -90,6 +92,7 @@ namespace our {
             glActiveTexture(GL_TEXTURE0);  
             albedo->bind();
             sampler->bind(0);
+            std::cout << "Setting material albedo in shaders" << std::endl;
             shader->set("material.albedo",0);
         }
         if (specular)
@@ -118,7 +121,7 @@ namespace our {
             glActiveTexture(GL_TEXTURE4);  
             emissive->bind();
             sampler->bind(4);
-            shader->set("material.emissive",4);
+            shader->set("material.emission",4);
         }
         glActiveTexture(GL_TEXTURE0);
     }
