@@ -27,7 +27,6 @@ namespace our {
         }else if(type == IsCollide::getID())
         { 
             component = entity->addComponent<IsCollide>();
-            cout<<"and collider"<<endl;
         }
         if(component) component->deserialize(data);
     }

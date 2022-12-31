@@ -50,6 +50,8 @@ class Hurtstate: public our::State {
             getApp()->changeState("menu");
         }
 
+
+        //Winning State
         int count = 0;
         for(auto entity : world.getEntities())
         {
@@ -58,9 +60,9 @@ class Hurtstate: public our::State {
                 count++;
             }
         }
-        if (count == 0)
+        if (count == 0) //If there no zombies in the world
         {
-           getApp()->changeState("win");
+           getApp()->changeState("win"); //win-state
         }
     }
 
