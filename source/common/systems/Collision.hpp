@@ -14,7 +14,7 @@
 #include "../application.hpp"
 
 
-int health=2;
+bool health=false;
 
 using namespace std;
 namespace our
@@ -63,7 +63,7 @@ namespace our
                             {
                                 // cout<<"Coll ooooooooooooooooooooh"<<endl;
                                 world->markForRemoval(Second->getOwner());
-                                //world->deleteMarkedEntities();
+                                world->deleteMarkedEntities();
                             }
                             else if(Name1=="zombie" && Name2=="sword")
                             {
@@ -74,34 +74,44 @@ namespace our
 
                             if(Name1=="player" && Name2=="zombie")
                             {
-                                health-=1;
-                                if(health==1)
+                                if(!health)
                                 {
+                                    health=true;
+                                    world->markForRemoval(Second->getOwner());
+                                    world->deleteMarkedEntities();
                                     //app->changestate("Damaged")
+                                    cout<<"Got hurted"<<endl;
+                                    app->changeState("hurt");
+                                    
                                 }
-                                else if(health==0)
+                                if(health)
                                 {
-                                    //app->changestate("lose")
+                                    app->changeState("lose");
                                 }
                                 // cout<<"Coll ooooooooooooooooooooh"<<endl;
                                 // world->markForRemoval(First->getOwner());
                                 //world->deleteMarkedEntities();
                             }
-                            else if(Name1=="zombie" && Name2=="player")
-                            {
-                                health-=1;
-                                if(health==1)
-                                {
-
-                                }
-                                else if(health==0)
-                                {
-
-                                }
-                                // cout<<"Coll ooooooooooooooooooooh"<<endl;
-                                //world->markForRemoval(Second->getOwner());
-                                //world->deleteMarkedEntities();
-                            }
+                            // else if(Name1=="zombie" && Name2=="player")
+                            // {
+                            //     if(!health)
+                            //     {
+                            //         health=true;
+                            //         world->markForRemoval(First->getOwner());
+                            //         world->deleteMarkedEntities();
+                            //         //app->changestate("Damaged")
+                            //         cout<<"Got hurted"<<endl;
+                            //         app->changeState("hurt");
+                                   
+                            //     }
+                            //     // cout<<"Coll ooooooooooooooooooooh"<<endl;
+                            //     //world->markForRemoval(Second->getOwner());
+                            //     //world->deleteMarkedEntities();
+                            //     if(health)
+                            //     {
+                            //         app->changeState("lose");
+                            //     }
+                            // }
 						}
 					}
 				}

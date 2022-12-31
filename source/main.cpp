@@ -5,6 +5,7 @@
 
 #include <application.hpp>
 
+#include "states/Loss-state.hpp"
 #include "states/menu-state.hpp"
 #include "states/play-state.hpp"
 #include "states/hurt-state.hpp"
@@ -43,6 +44,7 @@ int main(int argc, char** argv) {
     our::Application app(app_config);
     
     // Register all the states of the project in the application
+    app.registerState<Lossstate>("lose");
     app.registerState<Menustate>("menu");
     app.registerState<Playstate>("play");
     app.registerState<Hurtstate>("hurt");

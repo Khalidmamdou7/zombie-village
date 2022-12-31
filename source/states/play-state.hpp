@@ -57,7 +57,6 @@ class Playstate: public our::State {
             // If the escape  key is pressed in this frame, go to the menu state
             getApp()->changeState("menu");
         }
-        // TODO collesion
         // TODO check winning state
         // TODO check lossing state
     }

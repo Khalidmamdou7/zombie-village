@@ -13,10 +13,12 @@
         "renderer":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag"
+
         },
-        "renderer-hurt": {
+        "renderer-hurt":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/reddish.frag"
+            
         },
         "assets":{
             "shaders":{
