@@ -40,6 +40,12 @@ namespace our
         GLuint postprocessFrameBuffer, postProcessVertexArray;
         Texture2D *colorTarget, *depthTarget;
         TexturedMaterial* postprocessMaterial;
+
+        //Vector of different light sources that will be sent to the shader
+        //Because we are using single pass forward lighting approach
+        std::vector<LightComponent *> lights;
+        LitMaterial* MaterialLight;
+        
     public:
         // Initialize the renderer including the sky and the Postprocessing objects.
         // windowSize is the width & height of the window (in pixels).
