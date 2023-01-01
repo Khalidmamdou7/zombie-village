@@ -32,13 +32,13 @@ uniform vec3 eye;
 void main()
 {
     //Multiply local vertex position by the model matrix (transforming it to world coordinates)
-    vec3 world = (M * vec4(position, 1.0)).xyz; //Gets world coordinate of vertex
+    vec3 world = (M * vec4(position, 1.0f)).xyz; //Gets world coordinate of vertex
 
     //vertex's final position
     gl_Position = VP * vec4(world, 1.0);
-    fs_in.color = color;
+    vs_out.color = color;
 
-    fs_in.tex_coord = tex_coord;
+    vs_out.tex_coord = tex_coord;
 
     /*
     Transform normal vector of the vertex:
@@ -46,11 +46,10 @@ void main()
     uniform scaling: M is the same as M_IT
     normalize the vector:
     */
-    fs_in.normal = normalize((M_IT * vec4(normal, 0.0)).xyz);
+    vs_out.normal = normalize((M_IT * vec4(normal, 0.0)).xyz);
 
-    fs_in.view = eye - world; //view matrix: direction vector, from the camera to the object
-
-    fs_in.world = world;
+    vs_out.view = eye - world; //view matrix: direction vector, from the camera to the object
+    vs_out.world = world;
 }
 
 

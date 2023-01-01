@@ -126,6 +126,8 @@ namespace our {
             // so it is more performant to disable the depth mask
             postprocessMaterial->pipelineState.depthMask = false;
         }
+
+        
     }
 
     void ForwardRenderer::destroy(){
@@ -152,6 +154,8 @@ namespace our {
     void ForwardRenderer::render(World* world){
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent* camera = nullptr;
+
+        lights.clear();
         opaqueCommands.clear();
         transparentCommands.clear();
         for(auto entity : world->getEntities()){
@@ -172,6 +176,11 @@ namespace our {
                 // Otherwise, we add it to the opaque command list
                     opaqueCommands.push_back(command);
                 }
+            }
+            // If this entity has a light component
+            if(auto light = entity->getComponent<LightComponent>(); light){
+                // We add it to the list of lights
+                lights.push_back(light);
             }
         }
 
@@ -243,22 +252,40 @@ namespace our {
                 //loop through the lights vector
                 for (int i = 0; i < (int)lights.size(); i++)
                 {
-                  if(lights[i]->lightType >=0){
+                    light_material->shader->set("lights[" + to_string(i) + "].type", static_cast<int>(lights[i]->lightType));
+
+                    light_material->shader->set("lights[" + to_string(i) + "].color",lights[i]->color);
+
                     //calculate position and direction of the light source from its owner
                     glm::vec3 position = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,0,0,1);
                     glm::vec3 direction = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,-1,0,0);
+
+                    switch (lights[i]->lightType) {
+                        case LightType::DIRECTIONAL:
+                            light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
+                            break;
+                        case LightType::POINT:
+                            light_material->shader->set("lights[" + to_string(i) + "].position", position); 
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_constant", lights[i]->attenuation[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_linear", lights[i]->attenuation[1]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_quadratic", lights[i]->attenuation[2]);
+                            break;
+                        case LightType::SPOT:
+                            light_material->shader->set("lights[" + to_string(i) + "].position", position); 
+                            light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_constant", lights[i]->attenuation[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_linear", lights[i]->attenuation[1]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_quadratic", lights[i]->attenuation[2]);
+                            light_material->shader->set("lights[" + to_string(i) + "].inner_angle", lights[i]->cone_angles[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].outer_angle", lights[i]->cone_angles[0]);
+                            break;
+                    }
                     
-                    //set all uniforms of fragment shader
-                    light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
-                    light_material->shader->set("lights[" + to_string(i) + "].color",lights[i]->color);
-                    light_material->shader->set("lights[" + to_string(i) + "].type", lights[i]->lightType);
-                    light_material->shader->set("lights[" + to_string(i) + "].position", position); 
-                    light_material->shader->set("lights[" + to_string(i) + "].diffuse", lights[i]->diffuse);
-                    light_material->shader->set("lights[" + to_string(i) + "].specular", lights[i]->specular);
-                    light_material->shader->set("lights[" + to_string(i) + "].attenuation", lights[i]->attenuation);
-                    light_material->shader->set("lights[" + to_string(i) + "].cone_angles", lights[i]->cone_angles);
                     
-                }}
+                    // light_material->shader->set("lights[" + to_string(i) + "].diffuse", lights[i]->diffuse);
+                    // light_material->shader->set("lights[" + to_string(i) + "].specular", lights[i]->specular);
+                    
+                }
             }
             else
             {

@@ -30,9 +30,9 @@
                     "vs":"assets/shaders/textured.vert",
                     "fs":"assets/shaders/textured.frag"
                 },
-                "light": {
-                  "vs": "assets/shaders/light.vert",
-                  "fs": "assets/shaders/light.frag"
+                "lit":{
+                    "vs":"assets/shaders/light.vert",
+                    "fs":"assets/shaders/light_array.frag"
                 }
             },
             "textures":{
@@ -63,8 +63,8 @@
             },
             "materials":{
                 "Human":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -115,8 +115,8 @@
                     "sampler": "pixelated"
                 },
                 "grass":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -140,13 +140,13 @@
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
                     "texture": "monkey",
-                    "sampler": "default"
+                    "sampler": "default",
+                    "emissive": "asphalt_emissive"
                 },
                 "moon":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lit",
+                    "shader": "lit",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -157,7 +157,11 @@
                     },
                     "tint": [1, 1, 1, 1],
                     "texture": "moon",
-                    "sampler": "default"
+                    "sampler": "default",
+                    "albedo": "moon",
+                    "roughness": "moon",
+                    "specular": "moon",
+                    "emissive": "moon"
                 }
             }
         },
@@ -701,19 +705,49 @@
                 ]
             }, 
      ///////////////////////////////////////////////////////////////      
+            // {
+            //     "position": [0, 10, 0],
+            //     "rotation": [45, 45, 0],
+            //     "scale": [5, 5, 5],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "sphere",
+            //             "material": "moon"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "angularVelocity": [0, 90, 0]
+            //         }
+            //     ]
+            // },
             {
-                "position": [0, 10, 0],
-                "rotation": [45, 45, 0],
-                "scale": [5, 5, 5],
+                "position":[0, 10, 0],
                 "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "sphere",
-                        "material": "moon"
-                    },
+                        "type": "light",
+                        "typeOfLight": "SPOT",
+                        "color": [0, 0, 1]
+                    }
+                ]
+            },
+            {
+                "position":[0, 10, 0],
+                "components": [
                     {
-                        "type": "Movement",
-                        "angularVelocity": [0, 90, 0]
+                        "type": "light",
+                        "typeOfLight": "POINT",
+                        "color": [0, 0, 0]
+                    }
+                ]
+            },
+            {
+                "position":[0, 10, 0],
+                "components": [
+                    {
+                        "type": "light",
+                        "typeOfLight": "DIRECTIONAL",
+                        "color": [1, 1, 1]
                     }
                 ]
             }

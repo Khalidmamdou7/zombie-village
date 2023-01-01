@@ -61,10 +61,14 @@ namespace our {
     class LitMaterial : public TexturedMaterial {
     public:
         Texture2D* albedo;
+        glm::vec3 albedo_tint;
         Texture2D* specular;
+        glm::vec3 specular_tint;
         Texture2D* roughness;
+        glm::vec2 roughness_range;
         Texture2D* ambient_occlusion;
         Texture2D* emissive;
+        glm::vec3 emissive_tint;
         Sampler* sampler;
         
         void setup() const override;
