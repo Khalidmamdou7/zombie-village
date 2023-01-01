@@ -1,5 +1,19 @@
 #version 330 core
 
+/*
+Problem: These shaders are static, cannot take in data from outside, cannot change their behaviour except if we changed the code.
+Ex: if we had a triangle, we cannot move it except if we changed the code.
+Therefore we want to find a way to communicate between our code that runs on the CPU and the shaders that run on the GPU.
+Types of variables that create this link are: uniforms and attributes. 
+*/
+
+/*
+Uniforms should be used for values that change relatively rarely. (Ideally at most once per frame.)
+Attributes should be used for values that change frequently.
+*/
+
+//Attributes: per vertex parameters
+
 layout(location = 0) in vec3 position; //states where each vertex attribute is stored in the Vertex buffer object
 layout(location = 1) in vec4 color;
 layout(location = 2) in vec2 tex_coord; //pt on the texture that our vertex will map from (texture image: uv space)

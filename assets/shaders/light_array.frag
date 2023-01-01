@@ -1,5 +1,16 @@
 #version 330 core
 
+/*
+Problem: These shaders are static, cannot take in data from outside, cannot change their behaviour except if we changed the code.
+Ex: if we had a triangle, we cannot move it except if we changed the code.
+Therefore we want to find a way to communicate between our code that runs on the CPU and the shaders that run on the GPU.
+Types of variables that create this link are: uniforms and attributes. 
+*/
+
+/*
+Uniforms should be used for values that change relatively rarely. (Ideally at most once per frame.)
+Attributes should be used for values that change frequently.
+*/
 
 in Varyings {
     vec4 color;
