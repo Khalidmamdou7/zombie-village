@@ -732,38 +732,38 @@
             //         }
             //     ]
             // }
-
-
-            // {
-            //     "position":[0, 10, 0],
-            //     "components": [
-            //         {
-            //             "type": "light",
-            //             "typeOfLight": "DIRECTIONAL",
-            //             "color": [0, 0, 1]
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position":[0, 10, 0],
-            //     "components": [
-            //         {
-            //             "type": "light",
-            //             "typeOfLight": "SPOT",
-            //             "color": [1, 0, 0]
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position":[0, 10, 0],
-            //     "components": [
-            //         {
-            //             "type": "light",
-            //             "typeOfLight": "POINT",
-            //             "color": [1, 1, 1]
-            //         }
-            //     ]
-            // }
+            ,
+            {
+                "position":[0, 10, 0],
+                "components": [
+                    {
+                        "type": "light",
+                        "typeOfLight": "DIRECTIONAL",
+                        "color": [0, 0, 1]
+                    }
+                ]
+            },
+            {
+                "position":[0, 10, 0],
+                "components": [
+                    {
+                        "type": "light",
+                        "typeOfLight": "SPOT",
+                        "color": [1, 0, 0]
+                    }
+                ]
+            }
+            ,
+            {
+                "position":[0, 10, 0],
+                "components": [
+                    {
+                        "type": "light",
+                        "typeOfLight": "POINT",
+                        "color": [1, 1, 1]
+                    }
+                ]
+            }
         ]
     }
 }
