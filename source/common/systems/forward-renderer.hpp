@@ -4,6 +4,7 @@
 #include "../components/camera.hpp"
 #include "../components/mesh-renderer.hpp"
 #include "../asset-loader.hpp"
+#include "../components/light.hpp"
 
 #include <glad/gl.h>
 #include <vector>
@@ -41,6 +42,10 @@ namespace our
         Texture2D *colorTarget, *depthTarget;
         TexturedMaterial* postprocessMaterial;
 
+        //Vector of different light sources that will be sent to the shader
+        //Because we are using single pass forward lighting approach
+        std::vector<LightComponent*> lights;
+        LitMaterial* MaterialLight;
         
     public:
         // Initialize the renderer including the sky and the Postprocessing objects.

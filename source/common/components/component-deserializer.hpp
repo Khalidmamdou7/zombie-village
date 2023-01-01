@@ -8,6 +8,8 @@
 #include"IsCollide.hpp"
 #include<iostream>
 using namespace std;
+#include "light.hpp"
+
 namespace our {
 
     // Given a json object, this function picks and creates a component in the given entity
@@ -27,6 +29,8 @@ namespace our {
         }else if(type == IsCollide::getID())
         { 
             component = entity->addComponent<IsCollide>();
+        } else if(type == LightComponent::getID()){
+            component = entity->addComponent<LightComponent>(); //component ID in json file will be "light"
         }
         if(component) component->deserialize(data);
     }

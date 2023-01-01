@@ -2,7 +2,8 @@
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
 #include <iostream>
-
+#include<string>
+using namespace std;
 namespace our {
 
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json& config){
@@ -182,7 +183,9 @@ namespace our {
         //glm::vec3 cameraForward = glm::vec3(0.0, 0.0, -1.0f);
         // vec4 view camera to -z mult with getlocal to get world view
         glm::vec3 cameraForward =camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0, 0.0, -1.0f,0.0f);
-
+        auto owner = camera->getOwner();
+        auto M = owner->getLocalToWorldMatrix();
+        glm::vec3 eye = M * glm::vec4(0, 0, 0, 1);
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 9) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
@@ -226,8 +229,43 @@ namespace our {
         {
             //Setting materials albedo
             x.material->setup();
-            // set transform to be equal the model view projection matrix for each render command
-            x.material->shader->set("transform",VP*x.localToWorld);
+            
+            // if object's material is lit
+            if (auto light_material = dynamic_cast<LitMaterial *>(x.material); light_material)
+            {
+                //set all uniforms of vertex shader
+                light_material->shader->set("VP", VP);
+                light_material->shader->set("M", x.localToWorld);
+                light_material->shader->set("eye", eye);
+                light_material->shader->set("M_IT", glm::transpose(glm::inverse(x.localToWorld)));
+                light_material->shader->set("light_count", (int)lights.size());
+                
+                //loop through the lights vector
+                for (int i = 0; i < (int)lights.size(); i++)
+                {
+                  if(lights[i]->lightType >=0){
+                    //calculate position and direction of the light source from its owner
+                    glm::vec3 position = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,0,0,1);
+                    glm::vec3 direction = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,-1,0,0);
+                    
+                    //set all uniforms of fragment shader
+                    light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
+                    light_material->shader->set("lights[" + to_string(i) + "].color",lights[i]->color);
+                    light_material->shader->set("lights[" + to_string(i) + "].type", lights[i]->lightType);
+                    light_material->shader->set("lights[" + to_string(i) + "].position", position); 
+                    light_material->shader->set("lights[" + to_string(i) + "].diffuse", lights[i]->diffuse);
+                    light_material->shader->set("lights[" + to_string(i) + "].specular", lights[i]->specular);
+                    light_material->shader->set("lights[" + to_string(i) + "].attenuation", lights[i]->attenuation);
+                    light_material->shader->set("lights[" + to_string(i) + "].cone_angles", lights[i]->cone_angles);
+                    
+                }}
+            }
+            else
+            {
+                // set transform to be equal the model view projection matrix for each render command
+                x.material->shader->set("transform",VP*x.localToWorld);
+            }
+                        
             x.mesh->draw();
         }
         // If there is a sky material, draw the sky
@@ -290,6 +328,14 @@ namespace our {
             glDrawArrays(GL_TRIANGLES, 0, 3);
             glBindVertexArray(0);
 
+        }
+
+        //if there is a light material
+        //call its setup function
+        if (MaterialLight)
+        {
+            MaterialLight->setup();
+            
         }
     }
 

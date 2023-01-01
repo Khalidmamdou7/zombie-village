@@ -9,6 +9,7 @@
 namespace our {
 
     // An enum that defines the type of the light (DIRECTIONAL, POINT or SPOT)
+    // To define the light type
     enum class LightType {
         DIRECTIONAL,
         POINT,
@@ -17,20 +18,23 @@ namespace our {
 
     // This component denotes that any renderer should draw the scene relative to this light.
     // We do not define the eye, center or up here since they can be extracted from the entity local to world matrix
+    //the light component class which inherits from the component class
     class LightComponent : public Component {
     public:
-        LightType lightType; // The type of the light
-        glm::vec3 color = glm::vec3(0, 0, 0); // The color of the light
+        //Data that will be read from the json file, except position and direction as they are calculated from the entity component in the forward renderer
+        int lightType; 
+        glm::vec3 diffuse,specular,attenuation; 
+        glm::vec4 color;
+        glm::vec2 cone_angles; 
 
-        glm::vec3 attenuation = glm::vec3(0.0f, 0.0f, 0.0f); // The attenuation of the light for intensity
-        glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);  //direction of light for Directional and Spot
-        glm::vec2 cone_angles = glm::vec2(0.0f, 0.0f);  //cone angles for spot light
-
-        static std::string getID() { return "Light"; }
-
-        // Reads light parameters from the given json object
+        //In json file, type of light would be specified as string
+        std::string lightTypeStr;
+        
+        //overriding the deserializer function to read the light data from the json file
         void deserialize(const nlohmann::json& data) override;
-    };
+        
+        //ID: "light", read from the json file and specifies that this is a light component
+        static std::string getID() { return "light"; } };
 
 }
 

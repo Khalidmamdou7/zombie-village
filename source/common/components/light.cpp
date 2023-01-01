@@ -3,33 +3,51 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <asset-loader.hpp>
+#include "../ecs/component.hpp"
+#include "../deserialize-utils.hpp"
 
 namespace our
 {
 
-    // Reads light parameters from the given json object
+    // reading the light data from json file
     void LightComponent::deserialize(const nlohmann::json &data)
     {
-        if(!data.is_object()) return;
+        if (!data.is_object())//if it is not an object asln
+            return;
 
-        std::string lightTypestr = data.value("lightType", "Directional");
+        //default value to everything read
+        lightTypeStr = data.value("typeOfLight", "DIRECTIONAL");
 
-        if (lightTypestr == "Directional")
+        //set light type (integer) according to string read from the json file
+        if (lightTypeStr == "DIRECTIONAL")
+            lightType = 0;
+
+        else if (lightTypeStr == "POINT")
+            lightType = 1;
+
+        else if (lightTypeStr == "SPOT")
+            lightType =2;
+
+        
+        //reading the diffuse vector
+        diffuse = glm::vec3(data.value("diffuse", glm::vec3(1, 1, 1)));
+
+        //reading the specular vector
+        specular = glm::vec3(data.value("specular", glm::vec3(1, 1, 1)));
+
+        //Attenuation vector is only considered with POINT and SPOT light types 
+        if (lightType != 0)
         {
-            lightType = LightType::DIRECTIONAL;
+        attenuation = glm::vec3(data.value("attenuation", glm::vec3(1, 0, 0)));
         }
-        else if (lightTypestr == "Point")
-        {
-            lightType = LightType::POINT;
+
+        //If SPOT light type then read the inner and outer cone angles
+        //In json degrees, therefore here convert them to radians
+        if (lightType ==2)
+        {  
+        cone_angles.x = glm::radians((float)data.value("cone_angles.in",10));
+        cone_angles.y = glm::radians((float)data.value("cone_angles.out",80));
         }
-        else if (lightTypestr == "Spot")
-        {
-            lightType = LightType::SPOT;
-        }
-        color = glm::vec3(data["color"][0], data["color"][1], data["color"][2]);
-        attenuation = glm::vec3(data["attenuation"][0], data["attenuation"][1], data["attenuation"][2]);
-        cone_angles = glm::vec2(glm::radians((float)data["cone_angles"][0]), glm::radians((float)data["cone_angles"][1]));
-        direction = glm::vec3(data["direction"][0], data["direction"][1], data["direction"][2]);
     }
 
 }

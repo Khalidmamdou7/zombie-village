@@ -130,7 +130,7 @@
                     "sampler": "default"
                 },
                 "monkey":{
-                    "type": "textured",
+                    "type": "lit",
                     "shader": "textured",
                     "pipelineState": {
                         "faceCulling":{
