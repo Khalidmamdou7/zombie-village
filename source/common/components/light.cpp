@@ -54,7 +54,7 @@ namespace our
         if (lightType == LightType::SPOT)
         {  
         cone_angles.x = glm::radians((float)data.value("cone_angles.in",10));
-        cone_angles.y = glm::radians((float)data.value("cone_angles.out",80));
+        cone_angles.y = glm::radians((float)data.value("cone_angles.out",30));
         }
     }
 

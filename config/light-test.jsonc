@@ -360,7 +360,7 @@
                     }
                 ]
             },
-        ////////////////front side of fences/////////////////////////////////
+        //--------------------------------front side of fences----------------------------------
             {
                 "name":"wall",
                 "position": [8, 1, -10],
@@ -446,7 +446,7 @@
                     }
                 ]
             },
-        ////////////////back side of fences/////////////////////////////////
+        //-----------------------------back side of fences-------------------------------
             {
                 "name":"wall",
                 "position": [8, 1, 10],
@@ -532,7 +532,7 @@
                     }
                 ]
             },
-            //////////////////////////////////rigth side of the fences/////////////////////////////////
+            //-------------------------------------rigth side of the fences---------------------------------
             {
                 "name":"wall",
                 "position": [10, 1, -8],
@@ -618,7 +618,7 @@
                     }
                 ]
             }, 
-            //////////////////////////////////left side of the fences/////////////////////////////////
+            //--------------------------left side of the fences---------------------------------
             {
                 "name":"wall",
                 "position": [-10, 1, -8],
@@ -703,7 +703,7 @@
                         "Raduis": 1
                     }
                 ]
-            }, 
+            }//, 
      ///////////////////////////////////////////////////////////////      
             // {
             //     "position": [0, 10, 0],
@@ -721,36 +721,49 @@
             //         }
             //     ]
             // },
-            {
-                "position":[0, 10, 0],
-                "components": [
-                    {
-                        "type": "light",
-                        "typeOfLight": "SPOT",
-                        "color": [0, 0, 1]
-                    }
-                ]
-            },
-            {
-                "position":[0, 10, 0],
-                "components": [
-                    {
-                        "type": "light",
-                        "typeOfLight": "POINT",
-                        "color": [0, 0, 0]
-                    }
-                ]
-            },
-            {
-                "position":[0, 10, 0],
-                "components": [
-                    {
-                        "type": "light",
-                        "typeOfLight": "DIRECTIONAL",
-                        "color": [1, 1, 1]
-                    }
-                ]
-            }
+            // --------------------------------Light-------------------------//
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "SPOT",
+            //             "color": [1, 1, 1]
+            //         }
+            //     ]
+            // }
+
+
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "DIRECTIONAL",
+            //             "color": [0, 0, 1]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "SPOT",
+            //             "color": [1, 0, 0]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "POINT",
+            //             "color": [1, 1, 1]
+            //         }
+            //     ]
+            // }
         ]
     }
 }
