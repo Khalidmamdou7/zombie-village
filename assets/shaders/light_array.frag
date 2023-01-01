@@ -1,5 +1,6 @@
 #version 330 core
 
+
 in Varyings {
     vec4 color;
     vec2 tex_coord;
@@ -61,11 +62,11 @@ struct Material {
 
 // This contains all the material properties and texture maps for the object.
 struct TexturedMaterial {
-    sampler2D albedo_map;
+    sampler2D albedo_map; //how dark or bright the object is
     vec3 albedo_tint;
-    sampler2D specular_map;
+    sampler2D specular_map; //shinness of the object
     vec3 specular_tint;
-    sampler2D ambient_occlusion_map;
+    sampler2D ambient_occlusion_map; //used to calculate how exposed each point in a scene is to ambient lighting
     sampler2D roughness_map;
     vec2 roughness_range;
     sampler2D emissive_map;
