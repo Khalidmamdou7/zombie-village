@@ -17,6 +17,7 @@ namespace our {
         far = data.value("far", 100.0f);
         fovY = data.value("fovY", 90.0f) * (glm::pi<float>() / 180);
         orthoHeight = data.value("orthoHeight", 1.0f);
+        
     }
 
     // Creates and returns the camera view matrix

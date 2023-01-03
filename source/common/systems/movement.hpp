@@ -58,7 +58,16 @@ namespace our
                         //making entity position which is zombie equals delta time * normalized direction
                         entity->localTransform.position += deltaTime * dirct;
 
-                        entity->localTransform.rotation += deltaTime * movement->angularVelocity;
+                        // edit rotation to make zombies look at the player
+                        //getting direction (player position - zombie position)
+                        auto dirct2=(cam-entity->localTransform.position);
+                        // then normalize it
+                        dirct2=normalize(dirct2);
+                        //getting angle between direction and z axis
+                        auto angle=atan2(dirct2.x,dirct2.z);
+                        //making entity rotation which is zombie equals angle
+                        entity->localTransform.rotation=glm::vec3(0,angle,0);
+                        //entity->localTransform.rotation += deltaTime * movement->angularVelocity;
                     }
                 }
                 
