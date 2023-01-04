@@ -25,21 +25,27 @@ A zombie apocalypse has struck the world due to a mistake by a crazy scientist w
 
 ## How to run the game
 
-The game is built using openGL and C++ and is cross-platform. It has been tested on Windows and Linux. To run the game, you need to have openGL installed on your system. You can download the game from the releases section of this repository. The game is built using CMake, so you can build the game from source if you want to. To build the game from source, you need to have CMake installed on your system. You can download CMake from [here](https://cmake.org/download/). After you have CMake installed, you can build the game from source by following these steps:
+The game is built using the custome engine which is written using openGL and C++. It has been tested on Windows and Linux. To run the game, you need to have openGL installed on your system.
 
-1. Clone the repository using `git clone` in the terminal
-2. Run `cmake .` in the root directory of the repository in the terminal
-3. Run `./bin/GAME_APPLICATION.exe -c='config/light-test.jsonc` to run the game in the terminal
+To build the game files from the source, you need to have CMake tool installed on your system. You can download CMake from [here](https://cmake.org/download/). After you have CMake installed, you can build the game by following these steps:
+
+1. Clone the repository or download the zip file from the github website
+1. Run `cmake .` in the root directory of the repository in the terminal
+1. Run `./bin/GAME_APPLICATION.exe -c='config/light-test.jsonc` to run the game.
+
+```
+git clone https://github.com/Khalidmamdou7/zombie-village.git
+cd zombie-village
+cmake .
+./bin/GAME_APPLICATION.exe -c='config/light-test.jsonc
+```
+
 
 ## Game Engine Overview
 
 The game engine is built using openGL and C++ and is cross-platform. It has been tested on Windows and Linux. It is designed to be modular and extensible. It uses the Entity-Component-System (ECS) architecture to model the game entities. 
 
-To build the game engine from source, you could use CMake tool. You can download CMake from [here](https://cmake.org/download/). After you have CMake installed, you can build the game engine from source by following these steps:
-
-1. Clone the repository using `git clone`
-1. Run `cmake .` in the root directory of the repository
-1. Run `./bin/GAME_ENGINE.exe -c='config/light-test.jsonc` to run the game engine
+To build the game engine from source, you could follow the same steps as the ones used to build the game.
 
 To use the game engine to build your own game, you can follow these steps to add your game logic:
 
