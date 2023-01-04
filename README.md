@@ -2,6 +2,16 @@
 
 Zombie Village is a game themed around the zombie apocalypse in a minecraft-like world. The game is built using a custom game engine that we have developed for this project. The game engine is designed to be modular and extensible, and can be used to build other games. It is built using openGL and C++.
 
+## Table of Contents
+
+1. [Overview for the game](#overview-for-the-game)
+1. [Game Screenshots](#screenshots)
+1. [How to run the game](#how-to-run-the-game)
+1. [Game Engine Overview](#game-engine-overview)
+1. [Credits](#credits)
+1. [Contributers](#contributers)
+1. [Contributing to the game](#contributing-to-the-game)
+
 ## Overview for the game
 
 A zombie apocalypse has struck the world due to a mistake by a crazy scientist who was trying to reverse-enginner a virus. Accidentally, he created a virus that turned everyone into zombies. The world is now in chaos and the only hope for humanity is to survive the zombie apocalypse. You are one of the survivors and you have to survive the zombie apocalypse. You have been locked up in a village with a few other survivors. Lava has erupted from the ground and created a huge wall of lava that locked you up alone with the zombies. Luckily, you have found a "valeryan steel" sword hidden in your grandparents room which could kill the zombies. If you are smart enough to avoid the lava and kill the zombies, you will be able to survive the day. However, you and your village won't be safe forever, as zombies will keep coming and the lava will keep rising till you find a cure for that virus. But, that's will be left for another update of the game ... :)
@@ -17,9 +27,9 @@ A zombie apocalypse has struck the world due to a mistake by a crazy scientist w
 
 The game is built using openGL and C++ and is cross-platform. It has been tested on Windows and Linux. To run the game, you need to have openGL installed on your system. You can download the game from the releases section of this repository. The game is built using CMake, so you can build the game from source if you want to. To build the game from source, you need to have CMake installed on your system. You can download CMake from [here](https://cmake.org/download/). After you have CMake installed, you can build the game from source by following these steps:
 
-1. Clone the repository using `git clone`
-2. Run `cmake .` in the root directory of the repository
-3. Run `./bin/GAME_APPLICATION.exe -c='config/light-test.jsonc` to run the game
+1. Clone the repository using `git clone` in the terminal
+2. Run `cmake .` in the root directory of the repository in the terminal
+3. Run `./bin/GAME_APPLICATION.exe -c='config/light-test.jsonc` to run the game in the terminal
 
 ## Game Engine Overview
 
