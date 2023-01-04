@@ -5,6 +5,10 @@
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
+#include"IsCollide.hpp"
+#include<iostream>
+using namespace std;
+#include "light.hpp"
 
 namespace our {
 
@@ -22,6 +26,11 @@ namespace our {
             component = entity->addComponent<MovementComponent>();
         } else if(type == MeshRendererComponent::getID()){
             component = entity->addComponent<MeshRendererComponent>();
+        }else if(type == IsCollide::getID())
+        { 
+            component = entity->addComponent<IsCollide>();
+        } else if(type == LightComponent::getID()){
+            component = entity->addComponent<LightComponent>(); //component ID in json file will be "light"
         }
         if(component) component->deserialize(data);
     }

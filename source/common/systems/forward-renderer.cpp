@@ -2,7 +2,8 @@
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
 #include <iostream>
-
+#include<string>
+using namespace std;
 namespace our {
 
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json& config){
@@ -125,6 +126,8 @@ namespace our {
             // so it is more performant to disable the depth mask
             postprocessMaterial->pipelineState.depthMask = false;
         }
+
+        
     }
 
     void ForwardRenderer::destroy(){
@@ -151,6 +154,8 @@ namespace our {
     void ForwardRenderer::render(World* world){
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent* camera = nullptr;
+
+        lights.clear();
         opaqueCommands.clear();
         transparentCommands.clear();
         for(auto entity : world->getEntities()){
@@ -172,6 +177,11 @@ namespace our {
                     opaqueCommands.push_back(command);
                 }
             }
+            // If this entity has a light component
+            if(auto light = entity->getComponent<LightComponent>(); light){
+                // We add it to the list of lights
+                lights.push_back(light);
+            }
         }
 
         // If there is no camera, we return (we cannot render without a camera)
@@ -182,7 +192,9 @@ namespace our {
         //glm::vec3 cameraForward = glm::vec3(0.0, 0.0, -1.0f);
         // vec4 view camera to -z mult with getlocal to get world view
         glm::vec3 cameraForward =camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0.0, 0.0, -1.0f,0.0f);
-
+        auto owner = camera->getOwner();
+        auto M = owner->getLocalToWorldMatrix();
+        glm::vec3 eye = M * glm::vec4(0, 0, 0, 1);
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 9) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
@@ -226,8 +238,61 @@ namespace our {
         {
             //Setting materials albedo
             x.material->setup();
-            // set transform to be equal the model view projection matrix for each render command
-            x.material->shader->set("transform",VP*x.localToWorld);
+            
+            // if object's material is lit
+            if (auto light_material = dynamic_cast<LitMaterial *>(x.material); light_material)
+            {
+                //set all uniforms of vertex shader
+                light_material->shader->set("VP", VP);
+                light_material->shader->set("M", x.localToWorld);
+                light_material->shader->set("eye", eye);
+                light_material->shader->set("M_IT", glm::transpose(glm::inverse(x.localToWorld)));
+                light_material->shader->set("light_count", (int)lights.size());
+                
+                //loop through the lights vector
+                for (int i = 0; i < (int)lights.size(); i++)
+                {
+                    light_material->shader->set("lights[" + to_string(i) + "].type", static_cast<int>(lights[i]->lightType));
+
+                    light_material->shader->set("lights[" + to_string(i) + "].color",lights[i]->color);
+
+                    //calculate position and direction of the light source from its owner
+                    glm::vec3 position = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,0,0,1);
+                    glm::vec3 direction = lights[i]->getOwner()->getLocalToWorldMatrix()*glm::vec4(0,-1,0,0);
+
+                    switch (lights[i]->lightType) {
+                        case LightType::DIRECTIONAL:
+                            light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
+                            break;
+                        case LightType::POINT:
+                            light_material->shader->set("lights[" + to_string(i) + "].position", position); 
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_constant", lights[i]->attenuation[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_linear", lights[i]->attenuation[1]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_quadratic", lights[i]->attenuation[2]);
+                            break;
+                        case LightType::SPOT:
+                            light_material->shader->set("lights[" + to_string(i) + "].position", position); 
+                            light_material->shader->set("lights[" + to_string(i) + "].direction",direction);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_constant", lights[i]->attenuation[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_linear", lights[i]->attenuation[1]);
+                            light_material->shader->set("lights[" + to_string(i) + "].attenuation_quadratic", lights[i]->attenuation[2]);
+                            light_material->shader->set("lights[" + to_string(i) + "].inner_angle", lights[i]->cone_angles[0]);
+                            light_material->shader->set("lights[" + to_string(i) + "].outer_angle", lights[i]->cone_angles[0]);
+                            break;
+                    }
+                    
+                    
+                    // light_material->shader->set("lights[" + to_string(i) + "].diffuse", lights[i]->diffuse);
+                    // light_material->shader->set("lights[" + to_string(i) + "].specular", lights[i]->specular);
+                    
+                }
+            }
+            else
+            {
+                // set transform to be equal the model view projection matrix for each render command
+                x.material->shader->set("transform",VP*x.localToWorld);
+            }
+                        
             x.mesh->draw();
         }
         // If there is a sky material, draw the sky
@@ -290,6 +355,14 @@ namespace our {
             glDrawArrays(GL_TRIANGLES, 0, 3);
             glBindVertexArray(0);
 
+        }
+
+        //if there is a light material
+        //call its setup function
+        if (MaterialLight)
+        {
+            MaterialLight->setup();
+            
         }
     }
 

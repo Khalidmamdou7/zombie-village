@@ -10,15 +10,15 @@
 #include <functional>
 #include <array>
 
-// This struct is used to store the location and size of a button and the code it should execute when clicked
-struct Button {
-    // The position (of the top-left corner) of the button and its size in pixels
+// This struct is used to store the location and size of a Button2 and the code it should execute when clicked
+struct Button2 {
+    // The position (of the top-left corner) of the Button22 and its size in pixels
     glm::vec2 position, size;
-    // The function that should be excuted when the button is clicked. It takes no arguments and returns nothing.
+    // The function that should be excuted when the Button2 is clicked. It takes no arguments and returns nothing.
     std::function<void()> action;
 
-    // This function returns true if the given vector v is inside the button. Otherwise, false is returned.
-    // This is used to check if the mouse is hovering over the button.
+    // This function returns true if the given vector v is inside the Button2. Otherwise, false is returned.
+    // This is used to check if the mouse is hovering over the Button2.
     bool isInside(const glm::vec2& v) const {
         return position.x <= v.x && position.y <= v.y &&
             v.x <= position.x + size.x &&
@@ -26,7 +26,7 @@ struct Button {
     }
 
     // This function returns the local to world matrix to transform a rectangle of size 1x1
-    // (and whose top-left corner is at the origin) to be the button.
+    // (and whose top-left corner is at the origin) to be the Button2.
     glm::mat4 getLocalToWorld() const {
         return glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0.0f)) * 
             glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
@@ -38,14 +38,14 @@ class Menustate: public our::State {
 
     // A meterial holding the menu shader and the menu texture to draw
     our::TexturedMaterial* menuMaterial;
-    // A material to be used to highlight hovered buttons (we will use blending to create a negative effect).
+    // A material to be used to highlight hovered Button2s (we will use blending to create a negative effect).
     our::TintedMaterial * highlightMaterial;
     // A rectangle mesh on which the menu material will be drawn
     our::Mesh* rectangle;
     // A variable to record the time since the state is entered (it will be used for the fading effect).
     float time;
-    // An array of the button that we can interact with
-    std::array<Button, 2> buttons;
+    // An array of the Button2 that we can interact with
+    std::array<Button2, 2> Button2s;
 
     void onInitialize() override {
         // First, we create a material for the menu's background
@@ -56,11 +56,11 @@ class Menustate: public our::State {
         menuMaterial->shader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
         menuMaterial->shader->link();
         // Then we load the menu texture
-        menuMaterial->texture = our::texture_utils::loadImage("assets/textures/menu.png");
+        menuMaterial->texture = our::texture_utils::loadImage("assets/textures/menu.jpg");
         // Initially, the menu material will be black, then it will fade in
         menuMaterial->tint = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
-        // Second, we create a material to highlight the hovered buttons
+        // Second, we create a material to highlight the hovered Button2s
         highlightMaterial = new our::TintedMaterial();
         // Since the highlight is not textured, we used the tinted material shaders
         highlightMaterial->shader = new our::ShaderProgram();
@@ -91,21 +91,21 @@ class Menustate: public our::State {
         // Reset the time elapsed since the state is entered.
         time = 0;
 
-        // Fill the positions, sizes and actions for the menu buttons
-        // Note that we use lambda expressions to set the actions of the buttons.
+        // Fill the positions, sizes and actions for the menu Button2s
+        // Note that we use lambda expressions to set the actions of the Button2s.
         // A lambda expression consists of 3 parts:
         // - The capture list [] which is the variables that the lambda should remember because it will use them during execution.
         //      We store [this] in the capture list since we will use it in the action.
         // - The argument list () which is the arguments that the lambda should receive when it is called.
-        //      We leave it empty since button actions receive no input.
+        //      We leave it empty since Button2 actions receive no input.
         // - The body {} which contains the code to be executed. 
-        buttons[0].position = {830.0f, 607.0f};
-        buttons[0].size = {400.0f, 33.0f};
-        buttons[0].action = [this](){this->getApp()->changeState("play");};
+        Button2s[0].position = {830.0f, 607.0f};
+        Button2s[0].size = {400.0f, 33.0f};
+        Button2s[0].action = [this](){this->getApp()->changeState("play");};
 
-        buttons[1].position = {830.0f, 644.0f};
-        buttons[1].size = {400.0f, 33.0f};
-        buttons[1].action = [this](){this->getApp()->close();};
+        Button2s[1].position = {830.0f, 644.0f};
+        Button2s[1].size = {400.0f, 33.0f};
+        Button2s[1].action = [this](){this->getApp()->close();};
     }
 
     void onDraw(double deltaTime) override {
@@ -127,12 +127,12 @@ class Menustate: public our::State {
         auto& mouse = getApp()->getMouse();
         glm::vec2 mousePosition = mouse.getMousePosition();
 
-        // If the mouse left-button is just pressed, check if the mouse was inside
-        // any menu button. If it was inside a menu button, run the action of the button.
+        // If the mouse left-Button2 is just pressed, check if the mouse was inside
+        // any menu Button2. If it was inside a menu Button2, run the action of the Button2.
         if(mouse.justPressed(0)){
-            for(auto& button: buttons){
-                if(button.isInside(mousePosition))
-                    button.action();
+            for(auto& Button2: Button2s){
+                if(Button2.isInside(mousePosition))
+                    Button2.action();
             }
         }
 
@@ -161,11 +161,11 @@ class Menustate: public our::State {
         menuMaterial->shader->set("transform", VP*M);
         rectangle->draw();
 
-        // For every button, check if the mouse is inside it. If the mouse is inside, we draw the highlight rectangle over it.
-        for(auto& button: buttons){
-            if(button.isInside(mousePosition)){
+        // For every Button2, check if the mouse is inside it. If the mouse is inside, we draw the highlight rectangle over it.
+        for(auto& Button2: Button2s){
+            if(Button2.isInside(mousePosition)){
                 highlightMaterial->setup();
-                highlightMaterial->shader->set("transform", VP*button.getLocalToWorld());
+                highlightMaterial->shader->set("transform", VP*Button2.getLocalToWorld());
                 rectangle->draw();
             }
         }

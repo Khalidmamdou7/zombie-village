@@ -7,6 +7,7 @@
 #include <string>
 #include <glm/glm.hpp>
 
+#include<iostream>
 namespace our {
 
     class World; // A forward declaration of the World Class
@@ -45,6 +46,7 @@ namespace our {
         // If no component of type T was found, it returns a nullptr 
         template<typename T>
         T* getComponent(){
+            //std::cout<<"ana gwa el get ";
             //DONE: (Req 8) Go through the components list and find the first component that can be dynamically cast to "T*".
             for(auto it=components.begin();it!=components.end();it++)
             {

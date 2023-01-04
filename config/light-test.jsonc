@@ -1,0 +1,781 @@
+{
+    "start-scene": "menu",
+    "window":
+    {
+        "title":"Default Game Window",
+        "size":{
+            "width":1280,
+            "height":720
+        },
+        "fullscreen": true
+    },
+    "scene": {
+        "renderer":{
+            "sky": "assets/textures/sky.jpg",
+            "postprocess": "assets/shaders/postprocess/vignette.frag"
+
+        },
+        "renderer-hurt":{
+            "sky": "assets/textures/sky.jpg",
+            "postprocess": "assets/shaders/postprocess/reddish.frag"
+            
+        },
+        "assets":{
+            "shaders":{
+                "tinted":{
+                    "vs":"assets/shaders/tinted.vert",
+                    "fs":"assets/shaders/tinted.frag"
+                },
+                "textured":{
+                    "vs":"assets/shaders/textured.vert",
+                    "fs":"assets/shaders/textured.frag"
+                },
+                "lit":{
+                    "vs":"assets/shaders/light.vert",
+                    "fs":"assets/shaders/light_array.frag"
+                }
+            },
+            "textures":{
+                "moon": "assets/textures/moon.jpg",
+                "grass": "assets/textures/minegrass.png",
+                "wood": "assets/textures/wood.jpg",
+                "glass": "assets/textures/Fire.jpeg",
+                "monkey": "assets/textures/monkey.png",
+
+                "player": "assets/textures/player.png",
+                "sword": "assets/textures/String_Roughness.png"
+            },
+            "meshes":{
+
+                "cube": "assets/models/cube.obj",
+                "monkey": "assets/models/monkey.obj",
+                "plane": "assets/models/plane.obj",
+                "sphere": "assets/models/sphere.obj",
+
+                "player": "assets/models/enderman.obj",
+                "mine": "assets/models/minecraft_grass.obj"
+            },
+            "samplers":{
+                "default":{},
+                "pixelated":{
+                    "MAG_FILTER": "GL_NEAREST"
+                }
+            },
+            "materials":{
+                "Human":{
+                    "type": "lit",
+                    "shader": "lit",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "player",
+                    "sampler": "default"
+                },
+                "metal":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [0.45, 0.4, 0.5, 1],
+                    "texture": "sword",
+                    "sampler": "default"
+                },
+                "glass":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        },
+                        "blending":{
+                            "enabled": true,
+                            "sourceFactor": "GL_SRC_ALPHA",
+                            "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
+                        },
+                        "depthMask": false
+                    },
+                    "transparent": true,
+                    "tint": [1, 1, 1, 0.5],
+                    "texture": "glass",
+                    "sampler": "pixelated"
+                },
+                "grass":{
+                    "type": "lit",
+                    "shader": "lit",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "grass",
+                    "sampler": "default"
+                },
+                "monkey":{
+                    "type": "lit",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "texture": "monkey",
+                    "sampler": "default",
+                    "emissive": "asphalt_emissive"
+                },
+                "moon":{
+                    "type": "lit",
+                    "shader": "lit",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "moon",
+                    "sampler": "default",
+                    "albedo": "moon",
+                    "roughness": "moon",
+                    "specular": "moon",
+                    "emissive": "moon"
+                }
+            }
+        },
+        "world":[
+            {
+                "name":"player",
+                "position": [0, 0.2, 8],
+                "components": [
+                    {
+                        "type": "Camera"
+                    },
+                    {
+                        "type": "Free Camera Controller"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 0.1
+                    }
+                ],
+                "children": [
+                    // {
+                        
+                    //     "position": [0.1, -0.5, -1.5],
+                    //     "rotation": [0, 0, 0],
+                    //     "scale": [0.3, 0.3, 0.3],
+                    //     "components": [
+                    //         {
+                    //             "type": "Mesh Renderer",
+                    //             "mesh": "player",
+                    //             "material": "Human"
+                    //         }
+                    //     ]
+                    // },
+                    {
+                        "name":"sword",
+                        "position": [1, -1, -1],
+                        "rotation": [45, 45, 0],
+                        "scale": [0.1, 0.1, 1.0],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "cube",
+                                "material": "metal"
+                            },
+                            {
+                                "type": "IsCollide",
+                                "Raduis": 0.1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name":"zombie",
+                "position":[0,0,0],
+                "scale":[0.3,0.25,0.3],
+                "rotation": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "player",
+                        "material": "Human"
+                    },
+                    // {
+                    //     "type": "Movement",
+                    //     "linearVelocity": [0, 0.1, 0],
+                    //     "angularVelocity": [0, 45, 0]
+                    // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [1, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"zombie",
+                "position":[5,0,0],
+                "scale":[0.3,0.25,0.3],
+                "rotation": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "player",
+                        "material": "Human"
+                    },
+                    // {
+                    //     "type": "Movement",
+                    //     "linearVelocity": [0, 0.1, 0],
+                    //     "angularVelocity": [0, 45, 0]
+                    // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"zombie",
+                "position":[-5,0,0],
+                "scale":[0.3,0.25,0.3],
+                "rotation": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "player",
+                        "material": "Human"
+                    },
+                    // {
+                    //     "type": "Movement",
+                    //     "linearVelocity": [0, 0.1, 0],
+                    //     "angularVelocity": [0, 45, 0]
+                    // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"zombie",
+                "position":[-8,0,0],
+                "scale":[0.3,0.25,0.3],
+                "rotation": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "player",
+                        "material": "Human"
+                    },
+                    // {
+                    //     "type": "Movement",
+                    //     "linearVelocity": [0, 0.1, 0],
+                    //     "angularVelocity": [0, 45, 0]
+                    // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"zombie",
+                "position":[8,0,0],
+                "scale":[0.3,0.25,0.3],
+                "rotation": [0, 0, 0],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "player",
+                        "material": "Human"
+                    },
+                    // {
+                    //     "type": "Movement",
+                    //     "linearVelocity": [0, 0.1, 0],
+                    //     "angularVelocity": [0, 45, 0]
+                    // }
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [0, 0, 1]
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "position": [0, -1, 0],
+                "rotation": [-90, 0, 0],
+                "scale": [10, 10, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "grass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+        //--------------------------------front side of fences----------------------------------
+            {
+                "name":"wall",
+                "position": [8, 1, -10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [4, 1, -10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [0, 1, -10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [-4, 1, -10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [-8, 1, -10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+        //-----------------------------back side of fences-------------------------------
+            {
+                "name":"wall",
+                "position": [8, 1, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [4, 1, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [0, 1, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [-4, 1, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            {
+                "name":"wall",
+                "position": [-8, 1, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            },
+            //-------------------------------------rigth side of the fences---------------------------------
+            {
+                "name":"wall",
+                "position": [10, 1, -8],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [10, 1, -4],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [10, 1, 0],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [10, 1, 4],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [10, 1, 8],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            //--------------------------left side of the fences---------------------------------
+            {
+                "name":"wall",
+                "position": [-10, 1, -8],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [-10, 1, -4],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [-10, 1, 0],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [-10, 1, 4],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }, 
+            {
+                "name":"wall",
+                "position": [-10, 1, 8],
+                "rotation": [0, 90, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "glass"
+                    },
+                    {
+                        "type": "IsCollide",
+                        "Raduis": 1
+                    }
+                ]
+            }//, 
+     ///////////////////////////////////////////////////////////////      
+            // {
+            //     "position": [0, 10, 0],
+            //     "rotation": [45, 45, 0],
+            //     "scale": [5, 5, 5],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "sphere",
+            //             "material": "moon"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "angularVelocity": [0, 90, 0]
+            //         }
+            //     ]
+            // },
+            // --------------------------------Light-------------------------//
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "SPOT",
+            //             "color": [1, 1, 1]
+            //         }
+            //     ]
+            // }
+            //,
+
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "DIRECTIONAL",
+            //             "color": [0, 0, 128]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "SPOT",
+            //             "color": [128, 0, 0]
+            //         }
+            //     ]
+            // }
+            // ,
+            // {
+            //     "position":[0, 10, 0],
+            //     "components": [
+            //         {
+            //             "type": "light",
+            //             "typeOfLight": "POINT",
+            //             "color": [128, 0, 0]
+            //         }
+            //     ]
+            // }
+            ,
+            {
+                "position":[0, 10, 0],
+                "components": [
+                    {
+                        "type": "light",
+                        "typeOfLight": "SPOT",
+                        "color": [128, 0, 0]
+                    }
+                ]
+            }
+        ]
+    }
+}
